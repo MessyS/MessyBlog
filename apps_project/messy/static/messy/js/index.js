@@ -62,11 +62,28 @@
 			}
 		}
 
-		photoShowLoad()	// 轮播图异步加载
-		photoShow()		// 轮播图放大查看
+		// 归档日期处理
+        function archive(){
+		    $('.g-body-slideBar-archive-list li').each(function () {
+                const val = $(this).html();
+                $(this).html(val.replace('1日',''));
+
+                let yearInd = val.indexOf('年');
+                let monthInd = val.indexOf('月');
+
+                let year = val.slice(0,yearInd);
+                let month = val.slice(yearInd + 1,monthInd);
+
+                $(this).parent().attr('href',`/?year=${year}&month=${month}`)
+            })
+        }
+
+        archive();              // 归档元素处理
+		photoShowLoad();    	// 轮播图异步加载
+		photoShow();    		// 轮播图放大查看
 
 		// 初始、页面大小改变、滚动时判断是否需要固定侧边栏
-		slideBarFixed()
+		slideBarFixed();
 		$(window).resize(function(){slideBarFixed()})
 		$(window).scroll(function(){slideBarFixed()})
 	}
