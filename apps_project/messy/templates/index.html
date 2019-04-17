@@ -1,0 +1,164 @@
+{% load  static %}
+<!DOCTYPE html>
+<html>
+	<head>
+            <link rel="canonical" href="https://www.messys.top"/>
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="renderer" content="webkit">
+        <meta charset="UTF-8" http-equiv="content-Type" content="text/html">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name='keywords' content="Messy,MessyBlog,博客,凌乱">
+        <meta name='description' content="Messy,MessyBlog,Messy的个人网站,博客,凌乱">
+        <meta name='robots' content="all">
+        <meta name='author' content="Messy,凌乱,messygao@qq.com">
+        <link rel="shortcut icon" href="{% static 'messy/img/Messy-logo/icon-logo.png' %}" type="image/x-icon"/>
+
+		<title>首页 | Messy的小博客~~~</title>
+		<link rel="stylesheet" href='{% static "messy/framework/custom/webStyle.min.css" %}'>
+		<link rel="stylesheet" href='{% static "messy/css/index.min.css" %}'>
+		<meta name='viewport' content='width=device-width,initial-scale=1.0'>
+	</head>
+	<body>
+        {% include 'top_model.html'%}
+
+		<div class="g-headers">
+			<div class="g-headers-text">
+				<h1>Messy</h1>
+				<h1>WELCOME</h1>
+			</div>
+			<div class="g-headers-slideShow">
+				<div class="g-headers-slideShow-block">
+					<div class="g-headers-slideShow-1"><p>Loading...</p></div>
+					<div class="g-headers-slideShow-2"><p>Loading...</p></div>
+					<div class="g-headers-slideShow-3"><p>Loading...</p></div>
+					<div class="g-headers-slideShow-4"><p>Loading...</p></div>
+					<div class="g-headers-slideShow-5"><p>Loading...</p></div>
+				</div>
+			</div>
+			<div class="g-headers-slideShow-show">
+				<div class="g-headers-slideShow-show-block">
+					<img class="g-headers-slideShow-show-img">
+				</div>
+				<div class="g-headers-slideShow-show-text">
+					<div class="g-headers-slideShow-show-text-block">
+						<h2>看的不过瘾？</h2>
+						<p>更多美图请敬请访问摄影版块</p>
+						<a href='/photos' target='_blank'>立即前往</a>
+					</div>
+				</div>
+				<div class="g-slideShow-show-exit" onclick='$(this).parent().fadeOut(500)'>
+					<div class="g-slideShow-show-one"></div>
+					<div class="g-slideShow-show-two"></div>
+				</div>
+			</div>
+			<div class="g-headers-scroll">
+				<p>探索小站</p>
+				<div class="g-headers-scroll-solid"></div>
+			</div>
+		</div>
+
+		<div class="g-body">
+			<div class="g-body-branch-all">
+                {% for i in articlesList %}
+                    <div class="g-body-branch">
+                        <a href="/detail/{{ i.id }}" target="_blank">
+                            <div class="g-body-branch-photo" style="background:url('{{ i.photo }}')">
+                                <div class="g-body-branch-text-footer-lable-block">{{ i.category1.name}}</div>
+                                <div class="g-body-branch-text-footer-lable-block">{{ i.category2.name}}</div>
+                            </div>
+                        </a>
+                        <div class="g-body-branch-text">
+                            <div class="g-body-branch-text-headers">
+                                <div class="g-body-branch-text-headers-title"><a href="/detail/{{ i.id }}" target="_blank"><h3>{{ i.name }}</h3></a></div>
+                            </div>
+                            <div class="g-body-branch-text-body">
+                                <p>{{ i.front_context|slice:'300' }}</p>
+                            </div>
+                            <div class="g-body-branch-text-footer">
+                                <div class="g-body-branch-text-footer-author">{{ i.author.name }}</div>
+                                <div class="g-body-branch-text-footer-point">•</div>
+                                <div class="g-body-branch-text-footer-time">{{ i.time|slice:'10' }}</div>
+
+                                <div class="g-body-branch-text-footer-fun-block">
+                                    <div class="g-body-branch-text-footer-reading-block">
+                                        <img class="g-body-branch-text-footer-reading" src= '{% static "messy/img/index/reading.png" %}'>{{ i.traffic }}
+                                    </div>
+                                    <div class="g-body-branch-text-footer-comments-block">
+                                        <img class="g-body-branch-text-footer-comments" src= '{% static "messy/img/index/comments.png" %}'>{{ i.comments }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+
+				<div class="g-body-pages">
+					<table>
+						<tbody>
+							<tr>
+								<td><img class='g-body-pages-before' src='{% static "messy/img/index/page.png" %}' alt="上一页"></td>
+                                {% for i in pagesList %}
+                                    <td><a href="/?category=&pageId={{ i }}">{{ i }}</a></td>
+                                {% endfor %}
+								<td><img src='{% static "messy/img/index/page.png" %}' alt="下一页"></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+
+			<div class="g-body-slideBar">
+				<div class="g-body-slideBar-randomArticles">
+					<h3 class="g-body-slideBar-randomArticles-title">随机推荐</h3>
+					<div class="g-body-slideBar-randomArticles-list">
+                        {% for i in randomList %}
+                            <a href="/detail/{{ i.id }}" target="_blank">{{ i.title }}</a>
+                        {% endfor %}
+					</div>
+				</div>
+				<div class="g-body-slideBar-smartArticles">
+					<h3 class="g-body-slideBar-smartArticles-title">猜你喜欢 <p style="font-size:13px;color:#AAA">(算法优化中...暂时使用随机文章代替-_-!!)</p></h3>
+					<div class="g-body-slideBar-smartArticles-list">
+                        {% for i in likeList %}
+                            <a href="/detail/{{ i.id }}" target="_blank">{{ i.title }}</a>
+                        {% endfor %}
+					</div>
+				</div>
+				<div class="g-body-slideBar-category">
+					<h3 class="g-body-slideBar-category-title">文章分类</h3>
+					<div class="g-body-slideBar-category-list">
+                        {% for i in categoryList %}
+                            <a href="/?category={{ i.name }}" style="display: inline-block"><span>{{ i.name }}</span></a>
+                        {% endfor %}
+                    </div>
+				</div>
+				<div class="g-body-slideBar-archive">
+					<h3 class="g-body-slideBar-archive-title">历史归档</h3>
+					<div class="g-body-slideBar-archive-list">
+						{% for i in archive %}
+                            <li>{{ i }}</li>
+                        {% endfor %}
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+    <script src="{% static 'messy/framework/jquery.min.js' %}" type="text/javascript" charset="utf-8"></script>
+    <script src="{% static 'messy/framework/jquery.cookie.js' %}" type="text/javascript" charset="utf-8"></script>
+    <script src="{% static 'messy/framework/custom/md5.min.js' %}" type="text/javascript" charset="utf-8"></script>
+    <script src="{% static 'messy/model/topmodel/topmodel.min.js' %}?rev=1" type="text/javascript" charset="utf-8"></script>
+
+    <script src="{% static 'messy/js/index.js' %}" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		if($(window).width() < 740){
+			var apiUrl = 'https://cn.bing.com/ImageResolution.aspx?';
+			var w = $(window).width();
+			var h = $(window).height();
+			var mkt = 'zh-CN';
+			var bgiUrl = apiUrl + 'w=' + w + '&h=' + h + '&mkt=' + mkt
+		}else{
+			var bgiUrl = '{{ bgiAllUrl }}';
+		}
+		$('.g-headers-slideShow-1').css('background','url(' + bgiUrl + ')')
+	</script>
+</html>

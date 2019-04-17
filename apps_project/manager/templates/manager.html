@@ -1,0 +1,262 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+	<head>
+        <link rel="canonical" href="https://www.messys.top/manager"/>
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="renderer" content="webkit">
+        <meta charset="UTF-8" http-equiv="content-Type" content="text/html">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name='keywords' content="Messy,MessyBlog,博客,凌乱">
+        <meta name='description' content="Messy,MessyBlog,Messy的个人网站,博客,凌乱">
+        <meta name='robots' content="all">
+        <meta name='author' content="Messy,凌乱,messygao@qq.com">
+        <link rel="shortcut icon" href="{% static 'messy/img/Messy-logo/icon-logo.png' %}" type="image/x-icon"/>
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title>管理 | Messy的小博客~~~</title>
+		<link rel="stylesheet" href="{% static 'messy/framework/custom/webStyle.min.css' %}">
+		<link rel="stylesheet" href="{% static 'manager/css/manager.min.css' %}?rev=1">
+	</head>
+	<body>
+		<div class="g-all">
+			<div class="g-framework">
+				<div class="g-framework-top">
+                    <a href='#'>
+                        <div class="g-framework-top-logo">
+                            <img src="{% static 'manager/img/manager/MessyGao-black.png' %}" alt="Logo">
+                        </div>
+				    </a>
+					<div>历史操作</div>
+                    <div><a id="s-logout" href="/logout/" style="color:black;text-decoration: none">登出</a></div>
+				</div>
+
+				<div class="g-framework-left">
+					<div class="g-framework-left-headers">
+						<img src="{% static 'messy/img/t.png' %}" alt="头像">
+						<div class="g-body-header-text">
+							<div>Messy</div>
+							<p id='j-body-header-text-ip'>IP:127.0.0.1(xx市)</p>
+						</div>
+					</div>
+					<li class='g-framework-left-navigation-title'>MAIN NAVIGATION</li>
+					<div class="g-framework-left-options">
+						<div class="g-framework-left-options-all">
+							<div class="g-framework-left-options-list g-framework-left-options-title">
+								<img class='g-framework-left-options-title-icon' src="{% static 'manager/img/manager/server.png' %}" alt="服务器管理">
+								服务器管理
+								<img class='g-framework-left-options-list-open' src="{% static 'manager/img/manager/open.png' %}" alt="打开">
+							</div>
+							<div class="g-framework-left-options-options-block">
+                                <div class="g-framework-left-options-list g-framework-left-options-options j-fun" id='j-server-1'>实例概览</div>
+                                <div class="g-framework-left-options-list g-framework-left-options-options j-fun" id='j-server-2'>系统操作</div>
+							</div>
+						</div>
+						<div class="g-framework-left-options-all">
+							<div class="g-framework-left-options-list g-framework-left-options-title">
+								<img class='g-framework-left-options-title-icon' src="{% static 'manager/img/manager/articles.png' %}" alt="文章管理">
+								文章管理
+								<img class='g-framework-left-options-list-open' src="{% static 'manager/img/manager/open.png' %}" alt="打开">
+							</div>
+							<div class="g-framework-left-options-options-block">
+                                <div class="g-framework-left-options-list g-framework-left-options-options j-fun" id='j-articles-1'>写新文章</div>
+                                <div class="g-framework-left-options-list g-framework-left-options-options j-fun" id='j-articles-2'>导入MD（App端）</div>
+                                <div class="g-framework-left-options-list g-framework-left-options-options j-fun" id='j-articles-3'>导入MD（网页端）</div>
+                                <div class="g-framework-left-options-list g-framework-left-options-options j-fun" id='j-articles-4'>文章列表</div>
+							</div>
+						</div>
+						<div class="g-framework-left-options-all">
+							<div class="g-framework-left-options-list g-framework-left-options-title">
+								<img class='g-framework-left-options-title-icon' src="{% static 'manager/img/manager/classify.png' %}" alt="分类管理">
+								分类管理
+								<img class='g-framework-left-options-list-open' src="{% static 'manager/img/manager/open.png' %}" alt="打开">
+							</div>
+							<div class="g-framework-left-options-options-block">
+								<div class="g-framework-left-options-list g-framework-left-options-options j-fun" id='j-category-1'>分类列表</div>
+							</div>
+						</div>
+						<div class="g-framework-left-options-all">
+							<div class="g-framework-left-options-list g-framework-left-options-title">
+								<img class='g-framework-left-options-title-icon' src="{% static 'manager/img/manager/photos.png' %}" alt="图片管理">
+								图片管理
+								<img class='g-framework-left-options-list-open' src="{% static 'manager/img/manager/open.png' %}" alt="打开">
+							</div>
+							<div class="g-framework-left-options-options-block">
+                                <div class="g-framework-left-options-list g-framework-left-options-options j-fun" id='j-photos-1'>上传图片</div>
+					    		<div class="g-framework-left-options-list g-framework-left-options-options j-fun" id='j-photos-2'>图片列表</div>
+							</div>
+						</div>
+						<div class="g-framework-left-options-all">
+							<div class="g-framework-left-options-list g-framework-left-options-title">
+								<img class='g-framework-left-options-title-icon' src="{% static 'manager/img/manager/music.png' %}" alt="音乐管理">
+								音乐管理
+								<img class='g-framework-left-options-list-open' src="{% static 'manager/img/manager/open.png' %}" alt="打开">
+							</div>
+							<div class="g-framework-left-options-options-block">
+                                <div class="g-framework-left-options-list g-framework-left-options-options j-fun" id='j-music-1'>上传音乐</div>
+                                <div class="g-framework-left-options-list g-framework-left-options-options j-fun" id='j-music-2'>音乐列表</div>
+							</div>
+						</div>
+						<div class="g-framework-left-options-all">
+							<div class="g-framework-left-options-list g-framework-left-options-title">
+								<img class='g-framework-left-options-title-icon' src="{% static 'manager/img/manager/goodBoy.png' %}" alt="名单展示">
+								鸣谢名单
+								<img class='g-framework-left-options-list-open' src="{% static 'manager/img/manager/open.png' %}" alt="打开">
+							</div>
+							<div class="g-framework-left-options-options-block">
+							    <div class="g-framework-left-options-list g-framework-left-options-options j-fun" id='j-goodBoy-1'>名单管理</div>
+							</div>
+						</div>
+						<div class="g-framework-left-options-all">
+							<div class="g-framework-left-options-list g-framework-left-options-title">
+								<img class='g-framework-left-options-title-icon' src="{% static 'manager/img/manager/friendA.png' %}" alt="友链管理">
+								友链管理
+								<img class='g-framework-left-options-list-open' src="{% static 'manager/img/manager/open.png' %}" alt="打开">
+							</div>
+							<div class="g-framework-left-options-options-block">
+                                <div class="g-framework-left-options-list g-framework-left-options-options j-fun" id='j-friendA-1'>增加友链</div>
+                                <div class="g-framework-left-options-list g-framework-left-options-options j-fun" id='j-friendA-2'>友链列表</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+            <div class="g-body-loading">
+                <div class="spinner">
+                  <div class="cube1"></div>
+                  <div class="cube2"></div>
+                </div>
+            </div>
+
+			<div class="g-body">
+                <div class="g-body-resourcesOverView">
+                    <h2>资源概览</h2>
+                    <hr color="white"><br>
+                    <div class="g-body-resourcesOverView-resources">
+                        <div class="g-body-resourcesOverView-bgi g-body-resourcesOverView-cpuBgi">
+                            <img src="{% static 'manager/img/manager/CPU.png' %}" alt="CPU">
+                        </div>
+                        <div class="g-body-resourcesOverView-text">
+                            <span>CPU 使用率</span>
+                            <code id='s-cpu-text'>{{ dict.cpu }}</code>
+                        </div>
+                    </div>
+                    <div class="g-body-resourcesOverView-resources">
+                        <div class="g-body-resourcesOverView-bgi g-body-resourcesOverView-memoryBgi">
+                            <img src="{% static 'manager/img/manager/memory.png' %}" alt="内存">
+                        </div>
+                        <div class="g-body-resourcesOverView-text">
+                            <span>内存 使用率</span>
+                            <code id='s-memory-text'>{{ dict.memory }}</code>
+                        </div>
+                    </div>
+                    <div class="g-body-resourcesOverView-resources">
+                        <div class="g-body-resourcesOverView-bgi g-body-resourcesOverView-NetFlowBgi">
+                            <img src="{% static 'manager/img/manager/NetFlow.png' %}" alt="入网流量">
+                        </div>
+                        <div class="g-body-resourcesOverView-text">
+                            <span>入网 流量</span>
+                            <code id='s-NetFlow-text'>{{ dict.bytes_rcvd }}</code>
+                        </div>
+                    </div>
+                    <div class="g-body-resourcesOverView-resources">
+                        <div class="g-body-resourcesOverView-bgi g-body-resourcesOverView-NetTrafficBgi">
+                            <img src="{% static 'manager/img/manager/NetTraffic.png' %}" alt="入网流量">
+                        </div>
+                        <div class="g-body-resourcesOverView-text">
+                            <span>出网 流量</span>
+                            <code id='s-NetTraffic-text'>{{ dict.bytes_sent }}</code>
+                        </div>
+                    </div>
+                </div>
+                <div class="g-body-IP">
+                    <h2>IP概览</h2>
+                    <hr color="white"><br>
+                    <div class="g-body-IP-left">
+                        <div class="g-body-IP-left-AccessAll">
+                            <div class="g-body-IP-left-AccessAll-block">
+                                总访问量
+                                <div class="g-body-IP-left-AccessAll-count">
+                                    {{ dict.countAll }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="g-body-IP-left-AccessToday">
+                            <div class="g-body-IP-left-AccessToday-block">
+                                今天访问量
+                                <div class="g-body-IP-left-AccessToday-count">
+                                    {{ dict.countToday }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="g-body-IP-left-AccessCrawler">
+                            <div class="g-body-IP-left-AccessCrawler-block">
+                                今日爬虫量
+                                <div class="g-body-IP-left-AccessCrawler-count">
+                                    {{ dict.crawlerCountToday }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="g-body-IP-right">
+                        <div id="map" class='g-map'></div>
+                    </div>
+                </div>
+			</div>
+		</div>
+
+        <script src="https://pv.sohu.com/cityjson?ie=utf-8"></script>
+		<script src="{% static 'messy/framework/jquery.min.js' %}" type="text/javascript" charset="utf-8"></script>
+        <script src="{% static 'messy/framework/jquery.cookie.js' %}"></script>
+		<script src="{% static 'manager/js/manager.js' %}?rev=2" type="text/javascript" charset="utf-8"></script>
+
+        <link rel="stylesheet" href="{% static 'messy/model/maps/maps.min.css' %}" media="screen">
+        <script type="text/javascript" src="{% static 'messy/model/maps/maps.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'messy/model/maps/China.min.js' %}"></script>
+        <script>
+          $('#map').vectorMap({
+            map: 'cn_mill',
+
+            backgroundColor: 'transparent',
+            zoomMin: 0.9,
+            zoomMax: 2.4,
+            focusOn: {
+                x: 0.55,
+                y: 2,
+                scale: 0.9
+            },
+            regionStyle: {
+                initial: {
+                  fill: '#d2d6de',
+                },
+                hover: {
+                  fill: '#EAEAEA',
+                },
+                selectedHover: {}
+            },
+            markers: [
+                // {latLng: [经度（保留两位小数）, 纬度（保留两位小数）], name: '城市名称'},
+                // 推荐查询经纬度网站：http://www.gpsspg.com/maps.htm
+
+                {latLng: [29.56 ,106.55], name: '重庆'},
+                {latLng: [39.90, 116.41], name: '北京'},
+                {latLng: [31.24, 121.50], name: '上海'},
+                {latLng: [46.06, 122.06], name: '内蒙古 - 乌兰浩特'}
+            ],
+            markerStyle: {
+                initial: {
+                    fill: '#fd2020', // 足迹位置的填充颜色
+                    stroke: '#fff'   // 足迹位置的描边颜色
+                },
+                hover: {
+                    fill: '#fd2020', // 鼠标滑动至足迹位置后的填充颜色
+                    stroke: '#fff',  // 鼠标滑动至足迹位置后的描边颜色
+                    "fill-opacity": 0.8
+                },
+            },
+          });
+        </script>
+	</body>
+</html>

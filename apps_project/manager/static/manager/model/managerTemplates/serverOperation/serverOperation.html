@@ -1,0 +1,51 @@
+<div class="g-body-commonOperations">
+	<div class="g-body-commonOperations-title"><h2>常用操作</h2></div>
+	<hr color="white"><br>
+	<div class="g-body-commonOperations-body">
+		<div class="g-body-OperationsBlock g-body-commonOperations-body-vesting">
+			<div class="g-body-OperationsBlock-body-title g-body-commonOperations-body-vesting-title">
+				<h3>查询归属地</h3>
+			</div>
+			<div class="g-body-OperationsBlock-body-body g-body-commonOperations-body-vesting-body">
+				<div class="g-body-commonOperations-body-vesting-body-button">
+                    <input id="j-vesting-val" type="text" placeholder="查询数量,0为全部">
+					<button id='j-vesting'>查询</button>
+				</div>
+				<div class="g-body-commonOperations-body-vesting-body-plan">[未知/未知]</div>
+				<div class="g-body-commonOperations-body-vesting-body-prompt">
+					<div class="g-body-commonOperations-body-vesting-body-prompt-waitting">
+						查询中，请稍后...
+					</div>
+					<div class="g-body-commonOperations-body-vesting-body-prompt-success">
+                        查询成功！<a href="/manager/">点击查看</a>
+                    </div>
+					<div class="g-body-commonOperations-body-vesting-body-prompt-error"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="g-body-systemOperation">
+	<div class="g-body-systemOperation-title"><h2>系统操作</h2></div>
+	<hr color="white"><br>
+	<div class="g-body-OperationsBlock g-body-systemOperation-body-reboot">
+		<div class="g-body-OperationsBlock-body-title g-body-systemOperation-body-reboot-title">
+			<h3>重启服务器</h3>
+		</div>
+		<div class="g-body-OperationsBlock-body-body g-body-systemOperation-body-vesting-body">
+			<div class="g-body-systemOperation-body-vesting-body-button">
+				<button id='j-reboot'>重启</button>
+			</div>
+			<div class="g-body-systemOperation-body-vesting-body-waitting">
+				将在5分钟后进行重启
+			</div>
+			<div class="g-body-systemOperation-body-reboot-body-prompt">
+				<div class="g-body-systemOperation-body-reboot-body-prompt-success">
+					进一步操作请查看邮箱!
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<link rel="stylesheet" href="/resources/manager/model/managerTemplates/serverOperation/serverOperation.min.css">
+<script src="/resources/manager/model/managerTemplates/serverOperation/serverOperation.min.js" charset="utf-8"></script>

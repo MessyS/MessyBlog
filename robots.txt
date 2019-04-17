@@ -1,0 +1,4 @@
+﻿User-agent: *
+Disallow: /manager/
+Disallow: /resources/
+Crawl-delay: 5

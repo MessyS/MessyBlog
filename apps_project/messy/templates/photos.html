@@ -1,0 +1,71 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="canonical" href="https://www.messys.top/photos"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="renderer" content="webkit">
+    <meta charset="UTF-8" http-equiv="content-Type" content="text/html">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name='keywords' content="Messy,MessyBlog,博客,凌乱">
+    <meta name='description' content="Messy,MessyBlog,Messy的个人网站,博客,凌乱">
+    <meta name='robots' content="all">
+    <meta name='author' content="Messy,凌乱,messygao@qq.com">
+    <link rel="shortcut icon" href="{% static 'messy/img/Messy-logo/icon-logo.png' %}" type="image/x-icon"/>
+
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>摄影 | Messy的小博客~~~</title>
+	<link rel="stylesheet" href="{% static 'messy/model/topmodel/topmodel.min.css' %}">
+    <link rel="stylesheet" href="{% static 'messy/framework/custom/loading.min.css' %}">
+	<link rel="stylesheet" href="{% static 'messy/framework/custom/webStyle.min.css' %}">
+	<link rel="stylesheet" href="{% static 'messy/css/photos.min.css' %}?rev=2">
+</head>
+<body>
+    {% include 'top_model.html'%}
+
+    <div class="g-mask-all">
+        <div class="g-mask-text">
+            <div class="g-mask-M">M</div>
+            <div class="g-mask-E">E</div>
+            <div class="g-mask-S">S</div>
+            <div class="g-mask-S_2">S</div>
+            <div class="g-mask-Y">Y</div>
+        </div>
+        <div class="g-mask-bgi-2"></div>
+    </div>
+
+	<div class="g-bgi-bottom"></div>
+
+	<div class="g-body-all">
+		<div class="g-body-header">
+			<div class="g-body-header-position">
+				<img src="{% static 'messy/img/t.png' %}" alt="头像">
+				<div class="g-body-header-text">
+					<h2>个人拍摄的一些比较好看的图片</h2>
+					<h4>(商用联系个人获取原图哟~~~)</h4>
+				</div>
+			</div>
+			<div class="g-body-photos">
+			</div>
+		</div>
+	</div>
+
+	<script src="{% static 'messy/framework/jquery.min.js' %}" type="text/javascript" charset="utf-8"></script>
+    <script src="{% static 'messy/framework/jquery.cookie.js' %}" type="text/javascript" charset="utf-8"></script>
+    <script src="{% static 'messy/framework/custom/md5.min.js' %}" type="text/javascript" charset="utf-8"></script>
+    <script src="{% static 'messy/model/topmodel/topmodel.min.js' %}" type="text/javascript" charset="utf-8"></script>
+
+	<script src="{% static 'messy/js/photos.min.js' %}?rev=1"></script>
+    <script src="{% static 'messy/framework/seoPush.js' %}?rev=2" type="text/javascript" charset="utf-8"></script>
+    <script>
+        setTimeout(function(){
+            $('.g-mask-bgi-2').addClass('g-mask-bgi-2-hover');
+            setTimeout(function(){
+                $('.g-mask-all').addClass('g-mask-all-remove')
+            },500)
+        },1000)
+    </script>
+</body>
+</html>

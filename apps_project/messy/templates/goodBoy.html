@@ -1,0 +1,150 @@
+{% load static %}
+<!--
+ * @Author: Messy
+ * @AuthorEmail: messygao@qq.com
+ * @AuthorSite: https://www.messys.top
+ * @Date: 2019-04-07 20:46:05
+ * @LastEditTime: 2019-04-08 21:51:50
+ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="canonical" href="https://www.messys.top/goodBoy"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="renderer" content="webkit">
+    <meta charset="UTF-8" http-equiv="content-Type" content="text/html">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name='keywords' content="Messy,MessyBlog,博客,凌乱">
+    <meta name='description' content="Messy,MessyBlog,Messy的个人网站,博客,凌乱,赞赏">
+    <meta name='robots' content="all">
+    <meta name='author' content="Messy,凌乱,messygao@qq.com">
+    <link rel="shortcut icon" href="{% static 'messy/img/Messy-logo/icon-logo.png' %}" type="image/x-icon"/>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>赞赏 | Messy的小博客~~~</title>
+	<link rel="stylesheet" type="text/css" href="{% static 'messy/framework/custom/webStyle.min.css' %}"/>
+	<link rel="stylesheet" type="text/css" href="{% static 'messy/css/goodBoy.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'messy/model/topmodel/topmodel-bgiWhite.min.css' %}">
+</head>
+<body>
+    {% include 'top_model.html'%}
+
+	<div class="g-bottom-bgi"></div>
+	<div class="g-body">
+		<div class="g-body-photoShow">
+			<img src="{% static 'messy/img/t.png' %}" alt="头像">
+			<p>您的支持是我持续创造的动力!</p>
+		</div>
+
+		<div class="g-body-text">
+			<p>啊哈哈哈哈哈哈哈，还是没皮没脸的开了这么一个栏目，总是得恰饭的嘛！对不对</p>
+			<p>如果您喜欢我的文章或者其他的模块,随便意思意思在走呗，嘿嘿嘿。凡是赞赏过的小伙伴，我都会在七个工作日内将您的昵称列入下方的鸣谢名单以示感谢滴（除特别鸣谢以外，所有小伙伴的排序都是随机，都是有机会在前几排展示出来的！）</p>
+			<p>另外，个人承接包括但不限于爬虫、web开发、python方面的程序编写，如果有项目合作的意向，欢迎通过<a href="https://www.messys.top/about" target="_blank">关于我</a>的底部联系方式联系我,请备注：称呼 + 商务联系</p>
+			<img class='g-body-text-thanksGIF' src="{% static 'messy/img/goodBoy/thanks.gif' %}" alt="感谢小猫">
+
+			<div class="g-body-text-showPay-block">
+				<div class="g-body-text-showPay">
+					<img src="{% static 'messy/img/goodBoy/goodBoy.png' %}" alt="支持博主" >支持博主
+				</div>
+			</div>
+			
+			<div class="g-body-text-img-block" style="z-index: 1">
+				<div id="j-body-text-img-block-hide" onclick="this.parentNode.style.display='none'">
+					<div id="j-body-text-img-block-hide-oneLine"></div>
+					<div id="j-body-text-img-block-hide-twoLine"></div>
+				</div>
+				<div class="g-body-text-img-block-position">
+					<img src="{% static 'messy/img/goodBoy/WeChat.png' %}" alt="微信支付">
+					<img src="{% static 'messy/img/goodBoy/alpay.png' %}" alt="支付宝支付">
+					<img src="{% static 'messy/img/goodBoy/QQGroup.png' %}" alt="qq群">
+				</div>
+			</div>
+		</div>
+
+		<div class="g-body-thanksList">
+			<div class="g-body-thanksList-body">
+				<table>
+					<thead>
+						<tr>
+							<th>ID号</th>
+							<th>昵称</th>
+							<th>备注</th>
+							<th>赞赏金额(元)</th>
+						</tr>
+					</thead>
+					<tbody>
+                        <tr>
+                            <th class='g-body-thanksList-body-special'>
+                                <img class='g-body-thanksList-body-ranking' src="{% static 'messy/img/goodBoy/numberOne.png' %}" alt="第一">
+                                <span class="g-body-thanksList-body-ranking-id">{{ ranking.0.id }}</span>
+                            </th>
+                            <th class='g-body-thanksList-body-special'>{{ ranking.0.name }}</th>
+                            <th class='g-body-thanksList-body-special'>{{ ranking.0.note }}</th>
+                            <th class='g-body-thanksList-body-special g-body-thanksList-body-money'>{{ ranking.0.money }}</th>
+                        </tr>
+						<tr>
+							<th class='g-body-thanksList-body-special'>
+								<img class='g-body-thanksList-body-ranking' src="{% static 'messy/img/goodBoy/numberTwo.png' %}" alt="第二">
+								<span class="g-body-thanksList-body-ranking-id">{{ ranking.1.id }}</span>
+							</th>
+                            <th class='g-body-thanksList-body-special'>{{ ranking.1.name }}</th>
+                            <th class='g-body-thanksList-body-special'>{{ ranking.1.note }}</th>
+                            <th class='g-body-thanksList-body-special g-body-thanksList-body-money'>{{ ranking.1.money }}</th>
+						</tr>
+						<tr>
+							<th class='g-body-thanksList-body-special'>
+								<img class='g-body-thanksList-body-ranking' src="{% static 'messy/img/goodBoy/numberThree.png' %}" alt="第三">
+								<span class="g-body-thanksList-body-ranking-id">{{ ranking.2.id }}</span>
+							</th>
+                            <th class='g-body-thanksList-body-special'>{{ ranking.2.name }}</th>
+                            <th class='g-body-thanksList-body-special'>{{ ranking.2.note }}</th>
+                            <th class='g-body-thanksList-body-special g-body-thanksList-body-money'>{{ ranking.2.money }}</th>
+						</tr>
+                        {% for i in list %}
+                            <tr>
+                                <td>{{ i.id }}</td>
+                                <td>{{ i.name }}</td>
+                                <td>{{ i.note }}</td>
+                                <td class="g-body-thanksList-body-money">{{ i.money }}</td>
+                            </tr>
+                        {% endfor %}
+						<tr>
+							<td class='g-body-thanksList-body-meg'>共有 {{ totalNum }} 位小伙伴给博主提供了支持，谢谢！</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<script src="{% static 'messy/framework/jquery.min.js' %}" type="text/javascript" charset="utf-8"></script>
+    <script src="{% static 'messy/framework/jquery.cookie.js' %}" type="text/javascript" charset="utf-8"></script>
+    <script src="{% static 'messy/framework/custom/md5.min.js' %}" type="text/javascript" charset="utf-8"></script>
+    <script src="{% static 'messy/model/topmodel/topmodel.min.js' %}" type="text/javascript" charset="utf-8"></script>
+
+	<script>
+        window.onload = function(){
+            // 金额格式化
+            var $moneyNode = $(".g-body-thanksList-body-money");
+            for(var j=0;j<$moneyNode.length;j++){
+                var content = $(".g-body-thanksList-body-money")[j].innerHTML;
+                $(".g-body-thanksList-body-money")[j].innerHTML = parseFloat(content / 100).toFixed(2)
+            }
+            // 显示赞赏图
+            $('.g-body-text-showPay').click(function () {
+                $('.g-body-text-img-block').show()
+            });
+            // 图片展示处理
+            var spanLength = $('.g-body-thanksList-body-ranking-id').length;
+            console.log(spanLength)
+            for(var i=0;i<spanLength;i++){
+                var $span = $('.g-body-thanksList-body-ranking-id')[i];
+                if($span.innerText == ''){
+                    $('.g-body-thanksList-body-ranking')[i].style.cssText = ('display:none')
+                }
+            }
+        }
+	</script>
+    <script src="{% static 'messy/framework/seoPush.js' %}?rev=2" type="text/javascript" charset="utf-8"></script>
+</body>
+</html>

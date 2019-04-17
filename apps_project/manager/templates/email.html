@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>测试专业页面 | Messy的小博客~~~</title>
+</head>
+<body>
+    <script src="https://pv.sohu.com/cityjson?ie=utf-8"></script>
+    <script src="{% static 'messy/framework/jquery.min.js' %}" type="text/javascript" charset="utf-8"></script>
+    <script src="{% static 'messy/framework/jquery.cookie.js' %}"></script>
+    <script>
+        // 获取邮件模板
+        $.ajax({
+            url: '/resources/manager/model/resetPwd.html',
+            type: 'GET',
+            success: function (data) {
+                var myDate = new Date();
+			    var y = myDate.getFullYear(),
+                    m = myDate.getMonth() + 1,
+                    d = myDate.getDate(),
+                    H = myDate.getHours(),
+                    M = myDate.getMinutes();
+
+                // 一波强行替换
+                data = data.replace('MessyUser','Messy');
+                data = data.replace('MessyOperation','重置密码');
+                data = data.replace('MessyID','1');
+                data = data.replace('MessyTime',`${y}-${m}-${d} ${H}:${M}`);
+                data = data.replace('MessyIP',returnCitySN["cip"]+','+returnCitySN["cname"]);
+                data = data.replace('MessyA','https://www.messys.top/resetPwd');
+                data = data.replace('MessyA','https://www.messys.top/resetPwd');
+
+                // 调用发送邮件接口
+                $.ajax({
+                    url: '/emailSend/',
+                    type: 'POST',
+                    headers: {
+                        "X-CSRFToken": $.cookie('csrftoken')
+                    },
+                    data:{
+                        'title':'Messy的邮箱验证',
+                        'context':data,
+                        'toEmail':'messygao@qq.com',
+                    },
+                    success: function (data) {
+                        document.write(data)
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

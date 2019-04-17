@@ -1,0 +1,166 @@
+<!--
+ * @Author: Messy
+ * @AuthorEmail: messygao@qq.com
+ * @AuthorSite: https://www.messys.top
+ * @Date: 2019-04-09 10:53:28
+ * @LastEditTime: 2019-04-15 16:37:15
+ -->
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link rel="stylesheet" href="{% static 'messy/model/topmodel/topmodel.min.css' %}?rev=1">
+	<!-- 当需要白底黑字时引入 -->
+{#	<link rel="stylesheet" href="{% static 'messy/model/topmodel/topmodel-bgiWhite.min.css' %}">#}
+	<link rel="stylesheet" href="{% static 'messy/framework/custom/webStyle.min.css' %}">
+</head>
+<body>
+	<div class="g-navigation-all">
+		<div class="g-left-options">
+			<div class="g-left-options-1"></div>
+			<div class="g-left-options-2"></div>
+			<div class="g-left-options-3"></div>
+		</div>
+		<div class="g-top-navigation">
+			<div class="g-top-navigation-text-main">
+				<img class='g-head' src="{% static 'messy/model/topmodel/topmodel_img/t.png' %}" alt="头像">
+				<a href="/" class="g-logo">Messy</a>
+				<ul>
+					<li><p><a href="/">首页</a></p></li>
+					<li><p><a href="/photos">摄影</a></p></li>
+					<li><p><a href="#">音乐</a></p></li>
+					<li><p><a href="/goodBoy">赞赏</a></p></li>
+					<li><p><a href="#">友链</a></p></li>
+					<li><p><a href="/about">关于</a></p></li>
+					<li><p id='j-top-navigation-fun-oauth'><a>登录</a></p></li>
+					<li><div id='j-top-navigation-fun-search'></div></li>
+				</ul>
+			</div>
+		</div>
+
+		<div class="g-oauth">
+			<div class="g-oauth-exit">
+				<div class="g-oauth-exit-one"></div>
+				<div class="g-oauth-exit-two"></div>
+			</div>
+			<div class="g-oauth-left"></div>
+			<div class="g-oauth-right">
+				<div class="g-oauth-right-headers">
+					<div class="g-oauth-right-headers-logIn">账户登录</div>
+					<div class="g-oauth-right-headers-signUp">免费注册</div>
+				</div>
+				<div class="g-oauth-right-form-block">
+					<div class="g-oauth-right-form-block-signUp">
+						<div class="g-oauth-right-form">
+							<div id="j-oauth-email-SignUp-block">
+								<img src="{% static 'messy/model/topmodel/topmodel_img/yes.png' %}" alt="yes" class='g-oauth-signUp-list' id="j-oauth-email-SignUp-yes">
+								<input type="text" class="g-oauth-right-form-email" id='j-oauth-email-SignUp' placeholder="邮箱" autocomplete=off>
+								<div class='g-oauth-right-form-errMeg'></div>
+							</div>
+							<div id="j-oauth-password-SignUp-block">
+								<img src="{% static 'messy/model/topmodel/topmodel_img/yes.png' %}" alt="yes" class='g-oauth-signUp-list' id="j-oauth-password-SignUp-yes">
+								<input type="password" class="g-oauth-right-form-password" id='j-oauth-password-SignUp' placeholder="密码" autocomplete=off>
+								<div class='g-oauth-right-form-errMeg'></div>
+							</div>
+							<div id="j-oauth-password-confirm-SignUp-block">
+								<img src="{% static 'messy/model/topmodel/topmodel_img/yes.png' %}" alt="yes" class='g-oauth-signUp-list' id="j-oauth-password-confirm-SignUp-yes">
+								<input type="password" class="g-oauth-right-form-password-confirm" id='j-oauth-password-confirm-SignUp' placeholder="确认密码" autocomplete=off>
+								<div class='g-oauth-right-form-errMeg'></div>
+							</div>
+
+							<div id="j-oauth-sub-SignUp">立即注册</div>
+							<div id="j-oauth-sub-SignUp-meg"></div>
+						</div>
+					</div>
+					<div class="g-oauth-right-form-block-reSet">
+						<div class="g-oauth-right-form">
+							<div id="j-oauth-email-reSet-block">
+								<input type="text" class="g-oauth-right-form-email" id='j-oauth-email-reSet' placeholder="邮箱" autocomplete=off>
+								<div class='g-oauth-right-form-errMeg'></div>
+							</div>
+							<div id="j-oauth-email-reSet-block">
+								<input type="password" class="g-oauth-right-form-oldPwd" id='j-oauth-oldPwd-reSet' placeholder="旧密码" autocomplete=off>
+								<div class='g-oauth-right-form-errMeg'></div>
+							</div>
+							<div id="j-oauth-password-reSet-block">
+								<img src="{% static 'messy/model/topmodel/topmodel_img/yes.png' %}" alt="yes" class='g-oauth-reSet-list' id="j-oauth-password-reSet-yes">
+								<input type="password" class="g-oauth-right-form-password" id='j-oauth-password-reSet' placeholder="密码" autocomplete=off>
+								<div class='g-oauth-right-form-errMeg'></div>
+							</div>
+							<div id="j-oauth-password-confirm-reSet-block">
+								<img src="{% static 'messy/model/topmodel/topmodel_img/yes.png' %}" alt="yes" class='g-oauth-reSet-list' id="j-oauth-password-confirm-reSet-yes">
+								<input type="password" class="g-oauth-right-form-password-confirm" id='j-oauth-password-confirm-reSet' placeholder="确认密码" autocomplete=off>
+								<div class='g-oauth-right-form-errMeg'></div>
+							</div>
+
+							<div id="j-oauth-sub-reSet">立即重置</div>
+							<div id="j-oauth-sub-reSet-meg"></div>
+						</div>
+					</div>
+					<div class="g-oauth-right-form-block-logIn">
+						<div class="g-oauth-right-form">
+							<input type="text" class="g-oauth-right-form-username" id='j-oauth-username-LogIn' placeholder="Messy号/邮箱" autocomplete=off>
+							<input type="password" class="g-oauth-right-form-password" id='j-oauth-password-LogIn' placeholder="密码" autocomplete=off>
+							<div class="g-oauth-right-form-forget">忘记密码?</div>
+							<div id="j-oauth-sub-logIn">立即登录</div>
+							<div id="j-oauth-sub-logIn-meg"></div>
+						</div>
+						<div class="g-oauth-right-quickLogin">
+							<div class="g-oauth-right-quickLogin-QQ">
+								<div class="g-oauth-right-quickLogin-QQ-bgi"></div>
+								<p>QQ登录</p>
+							</div>
+							<div class="g-oauth-right-quickLogin-WeChat">
+								<div class="g-oauth-right-quickLogin-WeChat-bgi"></div>
+								<p>微信登录</p>
+							</div>
+							<div class="g-oauth-right-quickLogin-GitHub">
+								<div class="g-oauth-right-quickLogin-GitHub-bgi"></div>
+								<p>Git登录</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="g-search">
+			<div class="g-search-exit">
+				<div class="g-search-exit-one"></div>
+				<div class="g-search-exit-two"></div>
+			</div>
+			<div class="g-search-body">
+				<h2>How Can I Help You?</h2>
+				<input type="text" class="g-search-body-input" placeholder="请输入关键字" autocomplete=off>
+				<div class="g-search-body-sub">搜索</div>
+				<div class="g-search-body-block">
+					<div class="g-search-body-subResulte">
+						<p>搜索结果:</p>
+						<div class="g-search-subResulte-list"></div>
+					</div>
+					<div class="g-search-category">
+						<div class="g-search-category-hot">
+							<h3>热门搜索</h3>
+						</div>
+						<div class="g-search-category-history">
+							<h3 class="g-search-category-history-title">最近搜索(10条)</h3>
+							<div id="j-search-category-history-clear">清除记录</div>
+							<div class="g-search-category-history-list"></div>
+						</div>
+					</div>
+					<div class="g-search-copyright">
+						<hr>
+						<div class="g-copyright-text">Copyright © 2018-2019 messys.top</div>
+						<div class="g-icp-text">渝ICP备19002341号</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<img src="{% static 'messy/model/topmodel/topmodel_img/goTop.png' %}" alt="回顶" id="j-goTop">
+	</div>
+</body>
+</html>

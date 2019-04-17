@@ -1,0 +1,67 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+	<head>
+        <link rel="canonical" href="https://www.messys.top/detail/{{ detail.id }}"/>
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="renderer" content="webkit">
+        <meta charset="UTF-8" http-equiv="content-Type" content="text/html">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name='keywords' content="{{ detail.name }},Messy,MessyBlog,博客,凌乱">
+        <meta name='description' content="{{ detail.name }},Messy,MessyBlog,Messy的个人网站,博客,凌乱">
+        <meta name='robots' content="all">
+        <meta name='author' content="Messy,凌乱,messygao@qq.com">
+        <link rel="shortcut icon" href="{% static 'messy/img/Messy-logo/icon-logo.png' %}" type="image/x-icon"/>
+
+		<title>{{ detail.name }} | Messy的小博客~~~</title>
+		<meta name='viewport' content='width=device-width,initial-scale=1.0'>
+		<link rel="stylesheet" href="{% static 'articles/css/articleDetail.min.css' %}?rev=1">
+        <link rel="stylesheet" href="{% static 'messy/framework/custom/loading.min.css' %}" >
+        <link rel="stylesheet" href="{% static 'messy/framework/custom/webStyle.min.css' %}">
+        <link rel="stylesheet" href="{% static 'messy/model/topmodel/topmodel-bgiWhite.min.css' %}">
+	</head>
+	<body>
+        {% include 'top_model.html'%}
+
+        <div class="g-mask-all">
+			<div class="g-mask-text">
+				<div class="g-mask-M">M</div>
+				<div class="g-mask-E">E</div>
+				<div class="g-mask-S">S</div>
+				<div class="g-mask-S_2">S</div>
+				<div class="g-mask-Y">Y</div>
+			</div>
+			<div class="g-mask-bgi-2"></div>
+		</div>
+        <div class="g-bottom-bgi"></div>
+        <div class="g-topmodel"></div>
+        <div class="g-text">
+            <div class="g-articleDetail">
+                {{ detail.context|safe|cut:'</html>' }}
+                <div class="g-copyright-aritlces" style='background-image: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%);border-left:5px solid #EAEAEA;padding: 15px 20px;'>
+                    <p>本文作者: Messy </p>
+                    <p>原文链接:<a href='https://www.messys.top/detail/{{ detail.id }}' target="_blank">https://www.messys.top/detail/{{ detail.id }}</a></p>
+                    <p>版权声明: 本博客所有文章除特别声明外, 均采用
+                        <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>
+                        许可协议. 转载请注明出处!</p>
+                </div>
+            </div>
+        </div>
+        <script src="{% static 'messy/framework/jquery.min.js' %}" type="text/javascript" charset="utf-8"></script>
+        <script src="{% static 'messy/framework/jquery.cookie.js' %}" type="text/javascript" charset="utf-8"></script>
+        <script src="{% static 'messy/framework/custom/md5.min.js' %}" type="text/javascript" charset="utf-8"></script>
+        <script src="{% static 'messy/model/topmodel/topmodel.min.js' %}" type="text/javascript" charset="utf-8"></script>
+
+        <script>
+            window.onload = function(){
+                setTimeout(function(){
+                    document.getElementsByClassName('g-mask-bgi-2')[0].classList.add('g-mask-bgi-2-hover');
+                    setTimeout(function(){
+                        document.getElementsByClassName('g-mask-all')[0].classList.add('g-mask-all-remove')
+                    },500)
+                },1000)
+            }
+        </script>
+        <script src="{% static 'messy/framework/seoPush.js' %}" type="text/javascript" charset="utf-8"></script>
+	</body>
+</html>
