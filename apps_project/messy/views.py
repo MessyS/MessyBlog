@@ -198,6 +198,11 @@ class Messy():
 
 class MessyFun:
     def test(self):
+        # a = Article.objects.all()
+        # for i in a:
+        #     randomNum = round(random.random() * 36)
+        #     i.photo = "<div class='g-body-branch-photo-bgi' style='background: url(/media/defaultPhotos/%s.jpg)'></div>" % randomNum
+        #     i.save()
         return HttpResponse('yeah')
 
     def siteSearchHot(self):

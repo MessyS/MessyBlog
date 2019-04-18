@@ -62,9 +62,12 @@
                 {% for i in articlesList %}
                     <div class="g-body-branch">
                         <a href="/detail/{{ i.id }}" target="_blank">
-                            <div class="g-body-branch-photo" style="background:url('{{ i.photo }}')">
-                                <div class="g-body-branch-text-footer-lable-block">{{ i.category1.name}}</div>
-                                <div class="g-body-branch-text-footer-lable-block">{{ i.category2.name}}</div>
+                            <div class="g-body-branch-photo">
+                                <div class="g-body-branch-photo-block">
+                                    {{ i.photo|safe }}
+                                </div>
+                                <div class="g-body-branch-text-footer-lable-block">生活</div>
+                                <div class="g-body-branch-text-footer-lable-block">摄影</div>
                             </div>
                         </a>
                         <div class="g-body-branch-text">
@@ -98,7 +101,7 @@
 							<tr>
 								<td><img class='g-body-pages-before' src='{% static "messy/img/index/page.png" %}' alt="上一页"></td>
                                 {% for i in pagesList %}
-                                    <td><a href="/?category=&pageId={{ i }}">{{ i }}</a></td>
+                                    <td><a href="/?pageId={{ i }}">{{ i }}</a></td>
                                 {% endfor %}
 								<td><img src='{% static "messy/img/index/page.png" %}' alt="下一页"></td>
 							</tr>

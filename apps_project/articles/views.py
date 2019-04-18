@@ -17,51 +17,6 @@ from apps_project.server.views import *
 from apps_project.articles.models import *
 
 class ArticleShow:
-    # 文章选择页
-    @ensure_csrf_cookie
-    def articles(self,category,page_id):
-        Access().UserInfo(self)
-        category_name = category
-        page_id = page_id
-
-        bgiApi = 'https://cn.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&pid=hp'
-        q = requests.get(bgiApi)
-        endUrl = q.json()['images'][0]['url']
-        bgiAllUrl = 'https://cn.bing.com/' + endUrl
-
-        # 无参数跳转文章首页
-        if category_name is None or page_id is None:
-            return HttpResponseRedirect('/articles/New/1')
-
-        if category_name == 'New':
-            listAll = Article.objects.order_by('-time')
-            # 进行数据分页
-            paginator = Paginator(listAll,10)
-            list = paginator.page(page_id)
-            data = {
-                'list': list,
-                'bgiAllUrl': bgiAllUrl,
-            }
-            return render_to_response('articles.html',data)
-        else:
-            # 查询分类一和分类二所包含的文章
-            listAll = Article.objects.order_by('-time').filter(
-                Q(category1__name=category_name) | Q(category2__name=category_name))
-            if len(listAll) == 0:
-                return render_to_response('404.html')
-            else:
-                # 进行数据分页
-                try:
-                    paginator = Paginator(listAll, 10)
-                    list = paginator.page(page_id)
-                    data = {
-                        'list':list,
-                        'bgiAllUrl':bgiAllUrl,
-                    }
-                    return render_to_response('articles.html',data)
-                except:
-                    return render_to_response('404.html')
-
     # 文章详情页
     @ensure_csrf_cookie
     def detail(self,articles_id):
@@ -74,3 +29,54 @@ class ArticleShow:
             return render_to_response('articleDetail.html', locals())
         else:
             return render_to_response('404.html')
+
+    @ensure_csrf_cookie
+    def detail(self,articles_id):
+        ''' ****************************************** 侧边栏功能返回 *********************************************  '''
+        # 文章总数
+        recommendedList = Article.objects.all()
+        # 随机推荐
+        randomList = []
+        for i in range(6):
+            while True:
+                randomNum = round(random.random() * len(recommendedList))
+                randomArticle = Article.objects.filter(id__exact=randomNum)
+                if randomArticle.exists():
+                    randomList.append({
+                        'id':randomNum,
+                        'title':randomArticle[0].name
+                    })
+                    break
+
+        # 智能推荐（算法优化中，暂时用随机推荐代替）
+        likeList = []
+        for i in range(6):
+            while True:
+                randomNum = round(random.random() * len(recommendedList))
+                randomArticle = Article.objects.filter(id__exact=randomNum)
+                if randomArticle.exists():
+                    likeList.append({
+                        'id': randomNum,
+                        'title': randomArticle[0].name
+                    })
+                    break
+
+        # 所有分类(排除第一个:New)
+        categoryList = Category.objects.exclude(id__exact=1)
+
+        # 历史归档
+        archive = Article.objects.dates('time', 'month', order='DESC')
+
+        # 获取文章数据
+        articleData = Article.objects.get(id__exact=articles_id)
+
+        data = {
+            'detail':articleData,
+            # 侧边栏功能
+            'randomList':randomList,
+            'likeList':likeList,
+            'categoryList':categoryList,
+            'archive':archive,
+        }
+
+        return render_to_response('articleDetail.html', data)

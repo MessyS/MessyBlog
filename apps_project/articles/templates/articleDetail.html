@@ -1,3 +1,10 @@
+<!--
+ * @Author: Messy
+ * @AuthorEmail: messygao@qq.com
+ * @AuthorSite: https://www.messys.top
+ * @Date: 2019-02-26 10:28:14
+ * @LastEditTime: 2019-04-17 20:47:41
+ -->
 {% load static %}
 <!DOCTYPE html>
 <html>
@@ -13,55 +20,95 @@
         <meta name='author' content="Messy,凌乱,messygao@qq.com">
         <link rel="shortcut icon" href="{% static 'messy/img/Messy-logo/icon-logo.png' %}" type="image/x-icon"/>
 
+		<meta charset="UTF-8">
 		<title>{{ detail.name }} | Messy的小博客~~~</title>
 		<meta name='viewport' content='width=device-width,initial-scale=1.0'>
-		<link rel="stylesheet" href="{% static 'articles/css/articleDetail.min.css' %}?rev=1">
-        <link rel="stylesheet" href="{% static 'messy/framework/custom/loading.min.css' %}" >
-        <link rel="stylesheet" href="{% static 'messy/framework/custom/webStyle.min.css' %}">
-        <link rel="stylesheet" href="{% static 'messy/model/topmodel/topmodel-bgiWhite.min.css' %}">
+		<link rel="stylesheet" href="{% static 'messy/model/topmodel/topmodel-bgiWhite.min.css' %}" />
+        <link rel="stylesheet" href="{% static 'articles/css/articleDetail.min.css' %}" />
 	</head>
 	<body>
-        {% include 'top_model.html'%}
+	    {% include 'top_model.html' %}
 
-        <div class="g-mask-all">
-			<div class="g-mask-text">
-				<div class="g-mask-M">M</div>
-				<div class="g-mask-E">E</div>
-				<div class="g-mask-S">S</div>
-				<div class="g-mask-S_2">S</div>
-				<div class="g-mask-Y">Y</div>
-			</div>
-			<div class="g-mask-bgi-2"></div>
-		</div>
-        <div class="g-bottom-bgi"></div>
-        <div class="g-topmodel"></div>
-        <div class="g-text">
-            <div class="g-articleDetail">
-                {{ detail.context|safe|cut:'</html>' }}
-                <div class="g-copyright-aritlces" style='background-image: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%);border-left:5px solid #EAEAEA;padding: 15px 20px;'>
+        <div class="g-body">
+            <div class="g-body-articleDetail">
+                <div class="g-body-articleDetail-text">
+                    <div class="g-body-branch-photo-block">
+                        {{ detail.photo|safe }}
+                    </div>
+                    <div class="g-body-articleDetail-text-main">
+                        {{ detail.context|safe }}
+                    </div>
+                </div>
+
+                <div class="g-body-copyright-aritlces">
                     <p>本文作者: Messy </p>
-                    <p>原文链接:<a href='https://www.messys.top/detail/{{ detail.id }}' target="_blank">https://www.messys.top/detail/{{ detail.id }}</a></p>
-                    <p>版权声明: 本博客所有文章除特别声明外, 均采用
-                        <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>
-                        许可协议. 转载请注明出处!</p>
+                    <p>原文链接:<a href='https://www.messys.top/detail/{{ detail.id }}'>https://www.messys.top/detail/{{ detail.id }}</a></p>
+                    <p>版权声明: 本博客所有文章除特别声明外, 均采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>许可协议. 转载请注明出处!</p>
+                </div>
+            </div>
+
+            <div class="g-body-slideBar">
+                <div class="g-body-slideBar-randomArticles">
+                    <h3 class="g-body-slideBar-randomArticles-title">随机推荐</h3>
+                    <div class="g-body-slideBar-randomArticles-list">
+                        <a href="#">Django导入马克飞象的Markdown</a>
+                        <a href="#">Django数据分页</a>
+                        <a href="#">Nginx开启Gzip压缩加速</a>
+                        <a href="#">input accept类型大全</a>
+                    </div>
+                </div>
+                <div class="g-body-slideBar-smartArticles">
+                    <h3 class="g-body-slideBar-smartArticles-title">猜你喜欢</h3>
+                    <div class="g-body-slideBar-smartArticles-list">
+                        <a href="#">Django导入马克飞象的Markdown</a>
+                        <a href="#">Django数据分页</a>
+                        <a href="#">Nginx开启Gzip压缩加速</a>
+                        <a href="#">input accept类型大全</a>
+                    </div>
+                </div>
+                <div class="g-body-slideBar-category">
+                    <h3 class="g-body-slideBar-category-title">文章分类</h3>
+                    <div class="g-body-slideBar-category-list">
+                        <span>树莓派</span>
+                        <span>Css</span>
+                        <span>Django</span>
+                        <span>Python</span>
+                        <span>JavaScript</span>
+                        <span>生活</span>
+                        <span>摄影</span>
+                        <span>随笔</span>
+                        <span>日记</span>
+                    </div>
+                </div>
+                <div class="g-body-slideBar-archive">
+                    <h3 class="g-body-slideBar-archive-title">历史归档</h3>
+                    <div class="g-body-slideBar-archive-list">
+                        <li>2019年4月</li>
+                        <li>2019年3月</li>
+                        <li>2019年2月</li>
+                        <li>2019年1月</li>
+                    </div>
                 </div>
             </div>
         </div>
         <script src="{% static 'messy/framework/jquery.min.js' %}" type="text/javascript" charset="utf-8"></script>
         <script src="{% static 'messy/framework/jquery.cookie.js' %}" type="text/javascript" charset="utf-8"></script>
         <script src="{% static 'messy/framework/custom/md5.min.js' %}" type="text/javascript" charset="utf-8"></script>
-        <script src="{% static 'messy/model/topmodel/topmodel.min.js' %}" type="text/javascript" charset="utf-8"></script>
-
+        <script src="{% static 'messy/model/topmodel/topmodel.min.js' %}?rev=1" type="text/javascript" charset="utf-8"></script>
         <script>
-            window.onload = function(){
-                setTimeout(function(){
-                    document.getElementsByClassName('g-mask-bgi-2')[0].classList.add('g-mask-bgi-2-hover');
-                    setTimeout(function(){
-                        document.getElementsByClassName('g-mask-all')[0].classList.add('g-mask-all-remove')
-                    },500)
-                },1000)
-            }
+            // 归档日期处理
+		    $('.g-body-slideBar-archive-list li').each(function () {
+                const val = $(this).html();
+                $(this).html(val.replace('1日',''));
+
+                let yearInd = val.indexOf('年');
+                let monthInd = val.indexOf('月');
+
+                let year = val.slice(0,yearInd);
+                let month = val.slice(yearInd + 1,monthInd);
+
+                $(this).parent().attr('href',`/?year=${year}&month=${month}`)
+            });
         </script>
-        <script src="{% static 'messy/framework/seoPush.js' %}" type="text/javascript" charset="utf-8"></script>
-	</body>
+    </body>
 </html>

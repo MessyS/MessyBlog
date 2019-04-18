@@ -2,8 +2,9 @@ from django.db import models
 import time,random,string
 
 #常用变量
-now_time = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
-randomPhoto = '/media/defaultPhotos/%s.jpg' % round(random.random() * 36)
+nowTime = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
+randomPhoto = "<div class='g-body-branch-photo-bgi' style='background: url(/media/defaultPhotos/%s.jpg)'></div>" \
+              % round(random.random() * 36)
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
@@ -13,8 +14,8 @@ class Category(models.Model):
 
 class Article(models.Model):
     name = models.CharField(max_length=100)
-    time = models.DateField(default=now_time)
-    photo = models.CharField(max_length=1000,default=randomPhoto)
+    time = models.DateTimeField(default=nowTime)
+    photo = models.CharField(max_length=800,default=randomPhoto)
     context = models.TextField(default='内容死掉了.....(▼ヘ▼#)')
     front_context = models.TextField(default='内容死掉了.....(▼ヘ▼#)')
     author = models.ForeignKey('oauth.MUL',on_delete=models.CASCADE,related_name='authors')

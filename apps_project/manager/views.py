@@ -1,9 +1,12 @@
 # 系统库
+from io import BytesIO
+from PIL import Image
 import requests
 import hashlib
 import time
 import os,re, shutil, json ,psutil,datetime,threading
 from bs4 import BeautifulSoup
+from urllib.parse import quote
 # django库
 from django.shortcuts import render_to_response, HttpResponse, render, HttpResponseRedirect, reverse
 from django.core.paginator import *
@@ -102,10 +105,12 @@ class Articles:
             userOauth(self)
             today_time = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
             # 获取ajax发来的表单信息
-            category_list = self.POST.getlist('categoryList')       # 分类1/2
-            fileTitleH = self.POST.get('fileTitleH')                # 文章标题
-            fileContextH = self.POST.get('fileContextH')            # 文章内容
-            files = self.FILES.getlist('imgF')                      # 附属图片
+            category_list = self.POST.getlist('categoryList')   # 分类1/2
+            fileTitleH = self.POST.get('fileTitleH')            # 文章标题
+            fileContextH = self.POST.get('fileContextH')        # 文章内容
+            files = self.FILES.getlist('imgF')                  # 附属图片
+            x = self.POST.get('x')                         # 附属图片（宽）
+            y = self.POST.get('y')                         # 附属图片（高）
 
             # 信息初始化
             name = fileTitleH                                   # 文章名为文件名
@@ -117,39 +122,47 @@ class Articles:
                 category1 = category_list[0]
                 category2 = category_list[1]
 
-            index = fileContextH.find('line-height: 1.6;">')                                            # 马克飞象的标签去除
-            context = fileContextH[index + 19:]
-            bottom = '<center style="display:none !important;visibility:collapse !important;height:0 '  # 马克飞象多余隐藏标签去除
-            bottom_index = context.find(bottom)
-            bottom_index = int(bottom_index)
-            del_bottom = context[bottom_index:]
-            context = context.replace(del_bottom, '')
-
-            context = re.sub(fileTitleH + '_files', '/media/articlePhotos/' + fileTitleH,context)     # 全局替换文章的内的图片存储地址
-
-            def savePhotos():                                   # 附属图片的存储
-                for f in files:                                 # 通过图片名进行去重操作
-                    file_exist = os.path.exists('media/articlePhotos/' + fileTitleH + '/' + f.name)
-                    if file_exist:
-                        pass
-                    else:
-                        with open('media/articlePhotos/' + fileTitleH + '/' + f.name,'wb+') as destination:
-                            for chunk in f.chunks():
-                                destination.write(chunk)
-            if not files:                                       # 文件夹存在判断，防止系统错误
-                pass
-            else:
-                dir_exist = os.path.exists(r'media/articlePhotos/' + fileTitleH)
-                if dir_exist:
-                    savePhotos()
-                else:
-                    os.mkdir(r'media/articlePhotos/' + fileTitleH)
-                    savePhotos()
-
-            # 创建一部分字段并存储
-            addHF = Article(name=name, time=today_time, category1_id=category1, category2_id=category2)
+            addHF = Article(name=name, time=today_time,category1_id=category1, category2_id=category2)
             addHF.author = MUL.objects.first()
-            addHF.context = context
+
+            if len(files) != 0:
+                # 全局替换文章的内的图片存储地址(quote路径编码，防解析错误)
+                context = re.sub(fileTitleH + '_files','/media/articlePhotos/%s' % quote(fileTitleH),fileContextH)
+                addHF.context = context
+
+                def savePhotos():                                   # 附属图片的存储
+                    for f in files:                                 # 通过图片名进行去重操作
+                        file_exist = os.path.exists('media/articlePhotos/' + fileTitleH + '/' + f.name)
+                        if file_exist:
+                            pass
+                        else:
+                            with open('media/articlePhotos/' + fileTitleH + '/' + f.name,'wb+') as destination:
+                                for chunk in f.chunks():
+                                    destination.write(chunk)
+                if not files:                                       # 文件夹存在判断，防止系统错误
+                    pass
+                else:
+                    dir_exist = os.path.exists(r'media/articlePhotos/' + fileTitleH)
+                    if dir_exist:
+                        savePhotos()
+                    else:
+                        os.mkdir(r'media/articlePhotos/' + fileTitleH)
+                        savePhotos()
+
+                # 判断首图用bgi还是img
+                start = context.find('/media/articlePhotos/')
+                end = context[start:].find('"') + start
+                imgPath = context[start:end]
+
+                if (int(x) > 600) or (int(y) > 300):
+                    photo = "<div class='g-body-branch-photo-bgi' style='background: url(%s)'></div>" % imgPath
+                else:
+                    photo = "<img class='g-body-branch-photo-img' src='%s'>" % imgPath
+
+                addHF.photo = photo
+            else:
+                context = fileContextH
+                addHF.context = context
 
             # 前端展示内容（纯文本）
             top = fileTitleH
@@ -164,7 +177,7 @@ class Articles:
             # 存进数据库
             addHF.save()
 
-            return render(self, 'jump/oauthLogin.html')
+            return HttpResponse('suc')
         else:
             return render(self, '404.html')
 
@@ -189,7 +202,7 @@ class Articles:
                 category2 = category_list[1]
 
             # 创建一部分字段并存储
-            addHF = Article(name=name, time=today_time, category1_id=category1, category2_id=category2)
+            addHF = Article(name=name, time=today_time,category1_id=category1, category2_id=category2)
             addHF.author = MUL.objects.first()
             addHF.context = fileContextH
 
@@ -199,7 +212,7 @@ class Articles:
             # 存进数据库
             addHF.save()
 
-            return render(self, 'jump/oauthLogin.html')
+            return HttpResponse('suc')
         else:
             return render(self, '404.html')
 
@@ -213,7 +226,7 @@ class Articles:
 
             # 级联删除图片附件
             shutil.rmtree('media/articlePhotos/' + meg.name)
-            return render(self, 'jump/oauthLogin.html')
+            return HttpResponse('suc')
         else:
             return render(self, '404.html')
 

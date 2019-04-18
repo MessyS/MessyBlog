@@ -16,14 +16,18 @@ Including another URLconf
 from django.urls import path,include
 from django.conf import settings
 from django.conf.urls.static import static
+from django.shortcuts import render_to_response
+
+def biZhan(req):
+    return render_to_response('test.html')
 
 urlpatterns = [
     # path('admin/', admin.site.urls),
+    #  path('',biZhan),
 
     path('',include('apps_project.messy.urls')),
     path('',include('apps_project.manager.urls')),
     path('',include('apps_project.server.urls')),
     path('',include('apps_project.articles.urls')),
     path('',include('apps_project.oauth.urls')),
-
 ] + static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

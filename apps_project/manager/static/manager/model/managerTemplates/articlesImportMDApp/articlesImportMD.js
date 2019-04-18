@@ -1,3 +1,24 @@
+$('#s-imgF').change(function () {
+	createReader = function(file, whenReady) {
+		var reader = new FileReader;
+		reader.onload = function (evt) {
+			var image = new Image();
+			image.onload = function () {
+				var width = this.width;
+				var height = this.height;
+				if (whenReady) whenReady(width, height);
+			};
+			image.src = evt.target.result;
+		};
+		reader.readAsDataURL(file);
+	}
+	var file = document.getElementById('s-imgF');
+	createReader(file.files[0], function (w, h) {
+		x = w;
+		y = h;
+	});
+});
+
 $("#s-publishedArticles").click(function() {
     $chkBoxes = $('.g-body-importMD').find('input:checked');
     if ($chkBoxes.length == 0) {
@@ -22,6 +43,8 @@ $("#s-publishedArticles").click(function() {
 		var photoFiles = document.getElementById("s-imgF").files;
 		for(var i=0;i<photoFiles.length;i++){
 		    formData.append('imgF',photoFiles[i]);
+		    formData.append('x',x);
+		    formData.append('y',y);
 		}
 
 		// 获取文章内容
@@ -46,6 +69,9 @@ $("#s-publishedArticles").click(function() {
 			  success: function (data) {
 				$('.g-body-importMD-status').empty();
 				$('.g-body-importMD-status').html('<div style="color:#19b955">【' + fileTitle + '】发布成功！</div>');
+
+				$('#s-htmlF').val('')
+				$('#s-imgF').val('')
 			  },
 			  error: function () {
 				$('.g-body-importMD-status').empty();
