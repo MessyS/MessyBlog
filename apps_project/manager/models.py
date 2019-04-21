@@ -10,7 +10,7 @@ random_name = 'Messy' + random_str + '_' + now_time_s
 class Userip(models.Model):
     time = models.DateTimeField(default=nowTime)  # 访问时间
     ip = models.CharField(verbose_name='IP地址',max_length=30)    #ip地址
-    ip_address = models.CharField(verbose_name='IP地址归属地', max_length=200,default='等待查询中...')
+    ip_address = models.CharField(verbose_name='IP地址归属地', max_length=200,default='0')
     count = models.IntegerField(verbose_name='访问次数',default=0) #该ip访问次数
     url = models.CharField(max_length=100) #访问url地址
     shebei_meg = models.CharField(max_length=800)   #访问设备
@@ -46,6 +46,19 @@ class OperatingHistory(models.Model):
     class Meta:
         ordering = ['-time']
         verbose_name = '历史操作'
+        verbose_name_plural = verbose_name
+
+class photos(models.Model):
+    imgS = models.CharField(max_length=100, verbose_name='小缩略图url')
+    imgM = models.CharField(max_length=100, verbose_name='中缩略图url')
+    imgB = models.CharField(max_length=100, verbose_name='原图url')
+    time = models.DateTimeField(default=nowTime,verbose_name='图片上传时间')
+    author = models.ForeignKey('oauth.MUL',on_delete=models.CASCADE,related_name='authorCamera',verbose_name='图片作者名')
+    describe = models.CharField(max_length=1000,null=True,default='这个人很懒诶,什么都没写',verbose_name='图片描述')
+
+    class Meta:
+        ordering = ['-time']
+        verbose_name = '摄影图片列表'
         verbose_name_plural = verbose_name
 
 class goodBoyList(models.Model):

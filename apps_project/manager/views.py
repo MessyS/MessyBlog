@@ -23,11 +23,23 @@ from apps_project.oauth.models import *
 
 def userOauth(meg):
     '''用户认证'''
-    username = meg.COOKIES.get('username', '')
-    if username == 'Messy' or username == 'messygao@qq.com':
-        pass
+    MESSYSESSIN = meg.session.session_key
+    sessionY = meg.session.exists(MESSYSESSIN)
+    if sessionY:
+        messyId = meg.session.get('MESSYID')
+        messyEmail = meg.session.get('MESSYEMAIL')
+
+        userFind = MUL.objects.filter(
+            Q(messyId__exact=messyId) & Q(email__exact=messyEmail))
+        if userFind.exists():
+            if userFind[0].is_messy:
+                pass
+            else:
+                return HttpResponse('03')   # 用户权限等级不够
+        else:
+            return HttpResponse('02')       # 不存在的用户
     else:
-        return HttpResponse('请先登录！')
+        return HttpResponse('01')           # 未注册的session
 
 class Manager:
     def index(self):
@@ -69,6 +81,50 @@ class Server:
                 return HttpResponse('系统将于5分钟后重启')
         else:
             return HttpResponse('请使用正确的方式访问本页面哟~~~')
+
+    # ip地址归属地
+    def access(self):
+        if self.method == 'POST':
+            Access().UserInfo(self)
+            userOauth(self)
+            nums = self.POST.get('nums')
+            apiUrl = 'http://ip.taobao.com/service/getIpInfo.php?ip='
+            if int(nums) == 0:
+                u = Userip.objects.order_by('-time').filter(ip_address=0)
+            else:
+                u = Userip.objects.order_by('-time').filter(ip_address=0)[:int(nums)]
+
+            # 查询主程序函数
+            def main():
+                for i in u:
+                    # 异常继续循环执行
+                    def query():
+                        r = requests.get(apiUrl + i.ip)
+                        return r
+
+                    while True:
+                        r = query()
+                        if r.status_code == 200:
+                            q = r.json()
+                            ip_address = q['data']['country'] + '-' + \
+                                         q['data']['region'] + '-' + q['data']['city'] \
+                                         + '-' + q['data']['isp']
+                            i.ip_address = ip_address
+                            i.save()
+                            time.sleep(1)   # 淘宝的qps
+                            break
+                        else:
+                            time.sleep(1)
+
+            if int(nums) > 10 or int(nums) == 0:
+                T = threading.Thread(target=main)
+                T.start()
+                return HttpResponse(2)
+            else:
+                main()
+                return HttpResponse(1)
+        else:
+            return render_to_response('404.html')
 
 class Email:
     def emailSend(self):
@@ -229,6 +285,74 @@ class Articles:
             return HttpResponse('suc')
         else:
             return render(self, '404.html')
+
+class Photos:
+    def addPhotos(self):
+        '''添加摄影图片'''
+        if self.method == 'GET':
+            a = photos.objects.all()
+            return render_to_response('addPhotos.html',locals())
+        elif self.method == 'POST':
+            userOauth(self)
+
+            # 获取上传数据
+            imgList = self.FILES.getlist('imgF')
+
+            # ************  处理图片路径 media/cameraPhotos/img格式/md5（Messy + 格式 + 时间）.jpg   *********
+            imgSNameList = []
+            imgMNameList = []
+            imgBNameList = []
+            def photoDeal(model,modelList,i):
+                nowTime = time.strftime('%Y%m%d%H%M%S', time.localtime(time.time()))
+                # 列表数据增加(i为循环的加盐字符，预防图片名重合)
+                photoName =  'Messy%s%s%s' % (model,nowTime,i)
+                photoName = hashlib.new('md5', photoName.encode('utf-8'))
+                photoName = photoName.hexdigest()
+                photoName = 'media/cameraPhotos/img%s/%s.jpg' % (model,photoName)
+                modelList.append(photoName)
+
+            for i in range(len(imgList)):
+                photoDeal('S',imgSNameList,i)
+                photoDeal('M',imgMNameList,i)
+                photoDeal('B',imgBNameList,i)
+
+            # **********************************   数据库存储    *****************************************
+            for i in range(len(imgList)):
+                data = photos(imgS='/%s' % imgSNameList[i],imgM='/%s' % imgMNameList[i],imgB='/%s' % imgBNameList[i])
+                data.author = MUL.objects.first()
+                data.save()
+
+            # **********************************  图片各种压缩   *****************************************
+            def photoSave(img,w,h,width,model):
+                if img.width > width:               # 原图尺寸小于需要改变的尺寸则不改变尺寸
+                    newWidth = width
+                    newHeight = round(newWidth / w * h)
+                    img = img.resize((newWidth, newHeight), Image.ANTIALIAS)
+                if model == 'S':
+                    img.save(imgSNameList[num], optimize=True, quality=85)
+                elif model == 'M':
+                    img.save(imgMNameList[num], optimize=True, quality=85)
+                else:
+                    pass
+            num = 0
+            for i in imgList:
+                # 先存储原图
+                with open(imgBNameList[num], 'wb') as destination:
+                    for chunk in i.chunks():
+                        destination.write(chunk)
+                time.sleep(1)                   # 睡一秒存储,以防报错
+
+                # 在进行各种压缩
+                img = Image.open(imgBNameList[num])
+                w, h = img.size                  # 原始图片的长宽
+                photoSave(img,w,h,600,'S')           # 存小图
+                photoSave(img,w,h,1500,'M')          # 存中图
+
+                num += 1
+
+            return HttpResponse('year!')
+        else:
+            return render_to_response('404.html')
 
 class GoodBoy:
     def listShowJson(self):

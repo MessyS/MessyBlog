@@ -18,10 +18,33 @@ from apps_project.messy.views import *
 from apps_project.server.views import *
 
 class Login:
+    def auth(self):
+        # 首先验证是否为有效session
+        MESSYSESSIN = self.session.session_key
+        sessionY = self.session.exists(MESSYSESSIN)
+        if sessionY:
+            messyId = self.session.get('MESSYID')
+            messyEmail = self.session.get('MESSYEMAIL')
+
+            userFind = MUL.objects.filter(
+                Q(messyId__exact=messyId) & Q(email__exact=messyEmail))
+            if userFind.exists():
+                return HttpResponse('1')        # 认证成功
+            else:
+                return HttpResponse('02')       # 不存在的用户
+        else:
+            return HttpResponse('01')           # 未注册的session
+
     # 登出（删除cookie）
     def logOut(self):
+        # 清除当前用户的所有session
+        self.session.flush()
+
+        # 数据库中过期的session删除
+        self.session.clear_expired()
+
+        # 返回到主页
         response = HttpResponseRedirect('/')
-        response.delete_cookie('username')
         return response
 
     # 登录
@@ -35,9 +58,9 @@ class Login:
             # 判断是否需要查询的条件
             try:
                 user = int(user)
-                userData = MUL.objects.all().filter(Q(messyId__exact=user) | Q(email__exact=user))
+                userData = MUL.objects.filter(Q(messyId__exact=user) | Q(email__exact=user))
             except:
-                userData = MUL.objects.all().filter(email__exact=user)
+                userData = MUL.objects.filter(email__exact=user)
             if len(userData) == 0:
                 # 没有该用户
                 return HttpResponse('err')
@@ -60,13 +83,14 @@ class Login:
                     i.last_login = now_time
                     i.save()
 
-                    # 返回相应的数据
-                    response = HttpResponse('userSuc')
-                    if i.is_messy == 1:
-                        response = HttpResponse('adminSuc')
+                    self.session['MESSYID'] = i.messyId
+                    self.session['MESSYEMAIL'] = i.email
 
-                    response.set_cookie('username', i.name,10800)  # 一天cookie有效期
-                    return response
+                    # 根据身份返回相应的数据
+                    if i.is_messy == 1:
+                        return HttpResponse('adminSuc')
+                    else:
+                        return HttpResponse('userSuc')
                 else:
                     return HttpResponse('err')
         else:

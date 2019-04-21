@@ -1,0 +1,51 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+	<h3>
+        <span>上传图片:</span>
+        <input type="file" name='imgF' id='s-imgF' multiple="multiple" accept="image/*">
+        <button>上传</button>
+    </h3>
+
+    {% for i in a %}
+        <img src="{{ i.imgS }}">
+    {% endfor %}
+
+    <script src="{% static 'messy/framework/jquery.min.js' %}"></script>
+    <script src="{% static 'messy/framework/jquery.cookie.js' %}"></script>
+    <script>
+        $('button').click(function () {
+            console.log('数据发送中...');
+
+            let formData = new FormData;
+            let photoFiles = document.getElementById("s-imgF").files;
+            for(var i=0;i<photoFiles.length;i++){
+                formData.append('imgF',photoFiles[i]);
+            }
+
+            $.ajax({
+                url: '/addPhotos/',
+                type: 'POST',
+                contentType:false,
+                processData:false,
+                headers:{
+                    "X-CSRFToken":$.cookie('csrftoken')
+                },
+                data:formData,
+                success: function (data) {
+                    console.log(data)
+                }
+            });
+        })
+    </script>
+</body>
+</html>

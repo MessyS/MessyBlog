@@ -13,6 +13,7 @@ from django.core.mail import send_mail
 from messys.settings import DEFAULT_FROM_EMAIL
 # 自定义库
 from apps_project.manager.models import *
+from apps_project.oauth.models import *
 
 class ServerHardware:
     '''服务器资源监视'''
@@ -214,53 +215,3 @@ class messyFun:
             else:
                 dic[list[ptr]] = 1
             ptr += 1
-
-    # ip地址归属地
-    def access(self):
-        if self.method == 'GET':
-            return render_to_response('404.html')
-        elif self.method == 'POST':
-            Access().UserInfo(self)
-            username = self.COOKIES.get('username')
-            if username == 'Messy' or username == 'messygao@qq.com':
-                nums = self.POST.get('nums')
-                keyword = '等待当日零点定时查询'
-                apiUrl = 'http://ip.taobao.com/service/getIpInfo.php?ip='
-                if int(nums) == 0:
-                    u = Userip.objects.order_by('-time').filter(ip_address=keyword)
-                else:
-                    u = Userip.objects.order_by('-time').filter(ip_address=keyword)[:int(nums)]
-
-                def main():
-                    for i in u:
-                        # 异常继续循环执行
-                        def query():
-                            r = requests.get(apiUrl + i.ip)
-                            return r
-
-                        while True:
-                            r = query()
-                            if r.status_code == 200:
-                                q = r.json()
-                                ip_address = q['data']['country'] + '-' + \
-                                             q['data']['region'] + '-' + q['data']['city'] \
-                                             + '-' + q['data']['isp']
-                                i.ip_address = ip_address
-                                i.save()
-                                time.sleep(1)   # 淘宝的qps
-                                break
-                            else:
-                                time.sleep(1)
-                                r = query()
-
-                if int(nums) > 10 or int(nums) == 0:
-                    T = threading.Thread(target=main)
-                    T.start()
-                    return HttpResponse(2)
-                else:
-                    main()
-                    return HttpResponse(1)
-            else:
-                return HttpResponseRedirect('/login/?next=/manager/')
-        else:
-            return HttpResponse('请使用正确的方式访问本页面哟~~~')

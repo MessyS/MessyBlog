@@ -1,26 +1,6 @@
 (function(){
 	'use strict';
 
-	var Login = {
-		// 登录信息判断
-		main:function () {
-			if($.cookie('username') == '' || typeof($.cookie('username')) == 'undefined'){
-				$.cookie('emailSend',null);
-				window.location.href = '/login?next=/manager/';
-			};
-			setInterval(function () {
-				let cookieLife = $.cookie('username');
-				if(cookieLife == '' || typeof(cookieLife) == 'undefined'){
-					$.cookie('emailSend',null);
-					window.location.href = '/login?next=/manager/';
-				}
-			},6e5);
-			// 登出时删除cookie
-			$("#s-logout").click(function () {
-				$.cookie('emailSend',null);
-			});
-		}
-	};
 	var Email = {
 		Send:function(){
 			$.ajax({
@@ -118,8 +98,6 @@
 	};
 
 	window.onload = function(){
-		Login.main();									// 登录信息实时检查
-
 		// 上报功能暂时放弃（得买阿里云邮箱服务），改为数据库存储登录记录
 		// var emailSendLife = $.cookie('emailSend');		// 邮件上报IP
 		// if(emailSendLife != '1'){

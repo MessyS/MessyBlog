@@ -6,6 +6,7 @@ urlpatterns = [
     path('manager/',views.Manager.index, name='manager'),
 
     # 系统操作
+    path('ip_address/',views.Server.access,name='access'),
     path('reboot/',views.Server.reboot,name='reboot'),
 
     # 邮件发送
@@ -16,6 +17,9 @@ urlpatterns = [
     path('addHF_article/',views.Articles.addHF, name='addArticlesApp'),
     path('addHFHtml_article/',views.Articles.addHFHtml, name='addArticlesHtml'),
     path('del_article/',views.Articles.delMeg, name='delArticles'),
+
+    # 摄影图片管理
+    path('addPhotos/',views.Photos.addPhotos, name='addPhotos'),
 
     # 鸣谢列表
     path('listShowJson/',views.GoodBoy.listShowJson, name='GoodBoyJson'),

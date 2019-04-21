@@ -20,18 +20,15 @@ class ArticleShow:
     # 文章详情页
     @ensure_csrf_cookie
     def detail(self,articles_id):
+
+        # 访问记录与文章访问量
         Access().UserInfo(self)
         self._detail = Article.objects.filter(id__exact=articles_id)
         if self._detail.exists():
             detail = self._detail[0]
             detail.traffic += 1
             detail.save()
-            return render_to_response('articleDetail.html', locals())
-        else:
-            return render_to_response('404.html')
 
-    @ensure_csrf_cookie
-    def detail(self,articles_id):
         ''' ****************************************** 侧边栏功能返回 *********************************************  '''
         # 文章总数
         recommendedList = Article.objects.all()

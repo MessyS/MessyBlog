@@ -29,12 +29,30 @@
 	<body>
 	    {% include 'top_model.html' %}
 
+        <div class="g-body-photoShow">
+            <div class="g-body-photoShow-photo-black">
+                {{ detail.photo|safe }}
+            </div>
+
+            <div class="g-body-branch-photo-block-text-shadow"></div>
+
+            <div class="g-body-branch-photo-block-text">
+                <div class="g-body-branch-photo-block-text-position">
+                    <div class="g-body-branch-photo-block-text-lable-block">
+                        <span>{{ detail.category1.name }}</span>
+                        <span>{{ detail.category2.name }}</span>
+                    </div>
+                    <h2>{{ detail.name }}</h2>
+                    <div class="g-body-branch-photo-block-text-articleMeg-block">
+                        {{ detail.author.name }} • {{ detail.time }} • {{ detail.traffic }}阅读 • {{ detail.comments }}评论
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="g-body">
             <div class="g-body-articleDetail">
                 <div class="g-body-articleDetail-text">
-                    <div class="g-body-branch-photo-block">
-                        {{ detail.photo|safe }}
-                    </div>
                     <div class="g-body-articleDetail-text-main">
                         {{ detail.context|safe }}
                     </div>
@@ -47,49 +65,40 @@
                 </div>
             </div>
 
-            <div class="g-body-slideBar">
-                <div class="g-body-slideBar-randomArticles">
-                    <h3 class="g-body-slideBar-randomArticles-title">随机推荐</h3>
-                    <div class="g-body-slideBar-randomArticles-list">
-                        <a href="#">Django导入马克飞象的Markdown</a>
-                        <a href="#">Django数据分页</a>
-                        <a href="#">Nginx开启Gzip压缩加速</a>
-                        <a href="#">input accept类型大全</a>
+			<div class="g-body-slideBar">
+				<div class="g-body-slideBar-randomArticles">
+					<h3 class="g-body-slideBar-randomArticles-title">随机推荐</h3>
+					<div class="g-body-slideBar-randomArticles-list">
+                        {% for i in randomList %}
+                            <a href="/detail/{{ i.id }}" target="_blank">{{ i.title }}</a>
+                        {% endfor %}
+					</div>
+				</div>
+				<div class="g-body-slideBar-smartArticles">
+					<h3 class="g-body-slideBar-smartArticles-title">猜你喜欢 <p style="font-size:13px;color:#AAA">(算法优化中...暂时使用随机文章代替-_-!!)</p></h3>
+					<div class="g-body-slideBar-smartArticles-list">
+                        {% for i in likeList %}
+                            <a href="/detail/{{ i.id }}" target="_blank">{{ i.title }}</a>
+                        {% endfor %}
+					</div>
+				</div>
+				<div class="g-body-slideBar-category">
+					<h3 class="g-body-slideBar-category-title">文章分类</h3>
+					<div class="g-body-slideBar-category-list">
+                        {% for i in categoryList %}
+                            <a href="/?category={{ i.name }}" style="display: inline-block"><span>{{ i.name }}</span></a>
+                        {% endfor %}
                     </div>
-                </div>
-                <div class="g-body-slideBar-smartArticles">
-                    <h3 class="g-body-slideBar-smartArticles-title">猜你喜欢</h3>
-                    <div class="g-body-slideBar-smartArticles-list">
-                        <a href="#">Django导入马克飞象的Markdown</a>
-                        <a href="#">Django数据分页</a>
-                        <a href="#">Nginx开启Gzip压缩加速</a>
-                        <a href="#">input accept类型大全</a>
-                    </div>
-                </div>
-                <div class="g-body-slideBar-category">
-                    <h3 class="g-body-slideBar-category-title">文章分类</h3>
-                    <div class="g-body-slideBar-category-list">
-                        <span>树莓派</span>
-                        <span>Css</span>
-                        <span>Django</span>
-                        <span>Python</span>
-                        <span>JavaScript</span>
-                        <span>生活</span>
-                        <span>摄影</span>
-                        <span>随笔</span>
-                        <span>日记</span>
-                    </div>
-                </div>
-                <div class="g-body-slideBar-archive">
-                    <h3 class="g-body-slideBar-archive-title">历史归档</h3>
-                    <div class="g-body-slideBar-archive-list">
-                        <li>2019年4月</li>
-                        <li>2019年3月</li>
-                        <li>2019年2月</li>
-                        <li>2019年1月</li>
-                    </div>
-                </div>
-            </div>
+				</div>
+				<div class="g-body-slideBar-archive">
+					<h3 class="g-body-slideBar-archive-title">历史归档</h3>
+					<div class="g-body-slideBar-archive-list">
+						{% for i in archive %}
+                            <a><li>{{ i }}</li></a>
+                        {% endfor %}
+					</div>
+				</div>
+			</div>
         </div>
         <script src="{% static 'messy/framework/jquery.min.js' %}" type="text/javascript" charset="utf-8"></script>
         <script src="{% static 'messy/framework/jquery.cookie.js' %}" type="text/javascript" charset="utf-8"></script>

@@ -66,8 +66,10 @@
                                 <div class="g-body-branch-photo-block">
                                     {{ i.photo|safe }}
                                 </div>
-                                <div class="g-body-branch-text-footer-lable-block">生活</div>
-                                <div class="g-body-branch-text-footer-lable-block">摄影</div>
+                                <div class="g-body-branch-text-footer-lable-block">
+                                    <div class="g-body-branch-text-footer-lable-block-1">{{ i.category1.name }}</div>
+                                    <div class="g-body-branch-text-footer-lable-block-2">{{ i.category2.name }}</div>
+                                </div>
                             </div>
                         </a>
                         <div class="g-body-branch-text">
@@ -160,7 +162,7 @@
 			var mkt = 'zh-CN';
 			var bgiUrl = apiUrl + 'w=' + w + '&h=' + h + '&mkt=' + mkt
 		}else{
-			var bgiUrl = '{{ bgiAllUrl }}';
+			var bgiUrl = '{{ bgiAllUrl|safe }}';
 		}
 		$('.g-headers-slideShow-1').css('background','url(' + bgiUrl + ')')
 	</script>

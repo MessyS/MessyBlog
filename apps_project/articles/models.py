@@ -18,7 +18,7 @@ class Article(models.Model):
     photo = models.CharField(max_length=800,default=randomPhoto)
     context = models.TextField(default='内容死掉了.....(▼ヘ▼#)')
     front_context = models.TextField(default='内容死掉了.....(▼ヘ▼#)')
-    author = models.ForeignKey('oauth.MUL',on_delete=models.CASCADE,related_name='authors')
+    author = models.ForeignKey('oauth.MUL',on_delete=models.CASCADE,related_name='authorArticles')
     category1 = models.ForeignKey('Category', on_delete=models.CASCADE,related_name='categorys1')
     category2 = models.ForeignKey('Category', on_delete=models.CASCADE,related_name='categorys2',null=True)
     traffic = models.PositiveIntegerField(null=True,default=0)

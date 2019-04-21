@@ -123,7 +123,7 @@ class Messy():
         bgiApi = 'https://cn.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&pid=hp'
         q = requests.get(bgiApi)
         endUrl = q.json()['images'][0]['url']
-        bgiAllUrl = 'https://cn.bing.com/' + endUrl
+        bgiAllUrl = 'https://cn.bing.com/%s&w=950&h=535' % endUrl
 
         data = {
             # 文章分页器分页数据
@@ -198,12 +198,7 @@ class Messy():
 
 class MessyFun:
     def test(self):
-        # a = Article.objects.all()
-        # for i in a:
-        #     randomNum = round(random.random() * 36)
-        #     i.photo = "<div class='g-body-branch-photo-bgi' style='background: url(/media/defaultPhotos/%s.jpg)'></div>" % randomNum
-        #     i.save()
-        return HttpResponse('yeah')
+        return HttpResponse('year!')
 
     def siteSearchHot(self):
         searchDataHotList = []
