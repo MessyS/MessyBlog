@@ -45,23 +45,22 @@ class Manager:
     def index(self):
         '''管理台主页'''
         Access().UserInfo(self)
-
         userOauth(self)
+
         self._serMeg = ServerHardware().main()
         self._count_nums = VisitNumber.objects.get(id=1)
         self._date = time.strftime('%Y-%m-%d', time.localtime(time.time()))
         self._today = DayNumber.objects.get(day=self._date)
         # 返回服务器资源概览信息
-        dict  = {
-            'cpu':self._serMeg['cpu'],
-            'memory':self._serMeg['memory'][0],
-            'bytes_rcvd':self._serMeg['network'][0],
-            'bytes_sent':self._serMeg['network'][1],
-            'countAll':self._count_nums.count,
-            'countToday':self._today.count,
-            'crawlerCountToday':self._today.crawlerCount,
-        }
-        return render(self, 'manager.html',{'dict':dict})
+        return render(self, 'manager.html',{
+            'cpu': self._serMeg['cpu'],
+            'memory': self._serMeg['memory'][0],
+            'bytes_rcvd': self._serMeg['network'][0],
+            'bytes_sent': self._serMeg['network'][1],
+            'countAll': self._count_nums.count,
+            'countToday': self._today.count,
+            'crawlerCountToday': self._today.crawlerCount,
+        })
 
 class Server:
     def reboot(self):
@@ -290,7 +289,7 @@ class Photos:
     def addPhotos(self):
         '''添加摄影图片'''
         if self.method == 'GET':
-            a = photos.objects.all()
+            a = photos.objects.order_by('-time')
             return render_to_response('addPhotos.html',locals())
         elif self.method == 'POST':
             userOauth(self)
@@ -303,7 +302,7 @@ class Photos:
             imgMNameList = []
             imgBNameList = []
             def photoDeal(model,modelList,i):
-                nowTime = time.strftime('%Y%m%d%H%M%S', time.localtime(time.time()))
+                nowTime = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
                 # 列表数据增加(i为循环的加盐字符，预防图片名重合)
                 photoName =  'Messy%s%s%s' % (model,nowTime,i)
                 photoName = hashlib.new('md5', photoName.encode('utf-8'))
@@ -318,7 +317,7 @@ class Photos:
 
             # **********************************   数据库存储    *****************************************
             for i in range(len(imgList)):
-                data = photos(imgS='/%s' % imgSNameList[i],imgM='/%s' % imgMNameList[i],imgB='/%s' % imgBNameList[i])
+                data = photos(imgS='/%s' % imgSNameList[i],imgM='/%s' % imgMNameList[i],imgB='/%s' % imgBNameList[i],time=nowTime)
                 data.author = MUL.objects.first()
                 data.save()
 

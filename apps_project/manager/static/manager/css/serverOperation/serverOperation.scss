@@ -1,0 +1,102 @@
+.g-body-OperationsBlock{
+	display: inline-block;
+	width: 20%;
+	height: 200px;
+	border-radius: 2rem;
+	background: white;
+
+	text-align: center;
+
+	@media only screen and (max-width:1200px){
+		width:40%;
+	}
+	@media only screen and (max-width:700px){
+		width:100%;
+	}
+}
+
+.g-body-OperationsBlock-body-title{
+	border-radius: 2rem 2rem 0 0;
+
+	h3{
+		color: white;
+		margin: 0;
+		padding:10px;
+	}
+}
+
+.g-body-OperationsBlock-body-body{
+	height: calc(100% - 45px);
+}
+
+.g-body-commonOperations{
+	h2{
+		font-weight: 500;
+	}
+	.g-body-commonOperations-body-vesting{
+
+		.g-body-commonOperations-body-vesting-title{
+			background-image: linear-gradient(45deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%);
+		}
+
+		.g-body-commonOperations-body-vesting-body{
+			div {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				height: 33.33%;
+			}
+
+			.g-body-commonOperations-body-vesting-body-plan{
+				display: none;
+				color:black;
+			}
+
+			.g-body-commonOperations-body-vesting-body-prompt{
+				.g-body-commonOperations-body-vesting-body-prompt-waitting{
+					color:#AAA;
+					display: none;
+				}
+
+				.g-body-commonOperations-body-vesting-body-prompt-success{
+					display: none;
+					color: #19b955;
+				}
+				.g-body-commonOperations-body-vesting-body-prompt-error{
+					display: none;
+					color:#c9302c;
+				}
+			}
+		}
+	}
+}
+
+.g-body-systemOperation{
+	h2{
+		font-weight: 500;
+	}
+
+	.g-body-systemOperation-body-reboot{
+		.g-body-systemOperation-body-reboot-title{
+			background-image: linear-gradient(120deg, #f6d365 0%, #fda085 100%);
+		}
+
+		.g-body-systemOperation-body-vesting-body{
+			div {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				height: 33.33%;
+			}
+
+			.g-body-systemOperation-body-vesting-body-waitting{
+				display: none;
+				color:#f0ad4e;
+			}
+
+			.g-body-systemOperation-body-reboot-body-prompt-success{
+				display: none;
+			}
+		}
+	}
+}

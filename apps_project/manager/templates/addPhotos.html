@@ -10,19 +10,77 @@
 </head>
 <body>
 
+    <h1>摄影图片管理测试</h1>
+
 	<h3>
         <span>上传图片:</span>
         <input type="file" name='imgF' id='s-imgF' multiple="multiple" accept="image/*">
         <button>上传</button>
     </h3>
+    <div class="img-cont"></div>
 
-    {% for i in a %}
-        <img src="{{ i.imgS }}">
-    {% endfor %}
+    <div class="g-server-img">
+        <h2>图片测试区</h2>
+        {% for i in a %}
+            <div style="box-shadow: 0 2px 5px 2px rgba(0,0,0,.3);display:inline-block;margin:15px;height:300px;width:300px;background:url({{ i.imgS }});background-size:cover;background-position:center;"></div>
+        {% endfor %}
+    </div>
 
     <script src="{% static 'messy/framework/jquery.min.js' %}"></script>
     <script src="{% static 'messy/framework/jquery.cookie.js' %}"></script>
     <script>
+        $('#s-imgF').change(function () {
+            // 每次重选之前清空已展示图片
+            $('.img-cont').empty();
+
+            if(this.files.length >= 10){
+                $(this).val('');
+                alert('抱歉!一次最多可上传10张图片')
+            }else{
+                let sizeAll = 0;
+                for(var i=0;i<this.files.length;i++){
+                    let file = this.files[i];
+
+                    // 图片类型过滤
+                    var imageType = /^image\//;
+                    if (!imageType.test(file.type)) {
+                        alert('文件：' + file.name + '不是图片，请选择图片！');
+                        continue;
+                    }
+                    sizeAll += file.size
+                }
+                let sizeAllMb = (sizeAll / 1024 / 1024).toFixed(2);
+                console.log(sizeAllMb);
+                if(parseInt(sizeAllMb) > 50){
+                    alert('抱歉，图片总大小不能超过50MB')
+                }else{
+                    // 大小通过则展示展示图片在网页中
+                    for(var i=0;i<this.files.length;i++) {
+                        let file = this.files[i];
+                        // 图片实时展示
+                        var div = document.createElement('div');
+                        $('.img-cont').append(div);
+                        let reader = new FileReader();
+                        reader.onload = (function (div) {
+                            return function (e) {
+                                div.style.cssText = `
+                                    display:inline-block;
+                                    margin:15px;
+                                    height:300px;
+                                    width:300px;
+                                    box-shadow: 0 2px 5px 2px rgba(0,0,0,.3);
+                                    background:url(${e.target.result});
+                                    background-size:cover;
+                                    background-position:center;
+                                 `;
+                            }
+                        })(div);
+                        reader.readAsDataURL(file);
+                    }
+                }
+            }
+        });
+
         $('button').click(function () {
             console.log('数据发送中...');
 
@@ -45,7 +103,7 @@
                     console.log(data)
                 }
             });
-        })
+        });
     </script>
 </body>
 </html>

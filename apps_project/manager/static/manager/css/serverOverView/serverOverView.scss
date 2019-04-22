@@ -1,0 +1,136 @@
+.g-body-resourcesOverView{
+	h2{
+		font-weight:500;
+	}
+
+	.g-body-resourcesOverView-resources{
+		display: inline-block;
+		width: calc(24% - 1em);
+		margin:.5em;
+		height:90px;
+		background: white;
+
+		@media only screen and (max-width: 1200px){
+			width:calc(49% - 1em);
+		}
+		@media only screen and (max-width:700px){
+			width:calc(100% - 1em);
+		}
+
+		.g-body-resourcesOverView-bgi{
+			display: inline-block;
+			height: 100%;
+			width:90px;
+
+			img{
+				position: relative;
+				top:13px;
+				left:calc(50% - 32px);
+
+				display: inline-block;
+				height: 64px;
+			}
+		}
+
+		.g-body-resourcesOverView-cpuBgi{
+			background:#00c0ef;
+		}
+		.g-body-resourcesOverView-memoryBgi{
+			background:#f18375;
+		}
+		.g-body-resourcesOverView-NetFlowBgi{
+			background:#00a65a;
+		}
+		.g-body-resourcesOverView-NetTrafficBgi{
+			background:#f39c12;
+		}
+
+		.g-body-resourcesOverView-text{
+			position: relative;
+			top: -25%;
+			left:5px;
+
+			display: inline-block;
+		}
+		span{
+			display: inline-block;
+			font-size: 10px;
+			color: #AAA;
+		}
+		code{
+			position: relative;
+			top:10px;
+
+			display: block;
+			font-weight: bold;
+			font-size: 18px;
+		}
+	}
+}
+
+.g-body-IP{
+	h2{
+		font-weight:500;
+	}
+
+	.g-body-IP-left{
+		display: inline-flex;
+		width: 50%;
+
+		@media only screen and (max-width:1200px){
+			width:100%;
+			float: left;
+		}
+
+		.g-body-IP-left-AccessAll,.g-body-IP-left-AccessToday,.g-body-IP-left-AccessCrawler{
+			display:inline-flex;
+			justify-content: center;
+			align-items: center;
+			margin:10px calc((100% - 450px) / 6);
+
+			background: white;
+			height:150px;
+			width:150px;
+			border-radius: 50%;
+
+			font-size: 20px;
+
+			@media only screen and (max-width:700px){
+				height:120px;
+				width:120px;
+				margin:10px calc((100% - 360px) / 6);
+			}
+
+			.g-body-IP-left-AccessAll-block,.g-body-IP-left-AccessToday-block,.g-body-IP-left-AccessCrawler-block{
+				text-align: center;
+				font-size:15px;
+				color:#AAA;
+
+				div{
+					font-size:25px;
+					color:black;
+					font-weight: 600;
+				}
+			}
+		}
+	}
+
+	.g-body-IP-right{
+		float: right;
+		position: relative;
+		width: 50%;
+		height: 50vh;
+
+		@media only screen and (max-width:1200px){
+			width:100%;
+			float: left;
+		}
+
+		.g-map{
+
+			background: white;
+			height:100%;
+			width:100%;
+		}
+	}
+}
