@@ -51,6 +51,8 @@ class Manager:
         self._count_nums = VisitNumber.objects.get(id=1)
         self._date = time.strftime('%Y-%m-%d', time.localtime(time.time()))
         self._today = DayNumber.objects.get(day=self._date)
+
+        self._photos = photos.objects.order_by('-time')
         # 返回服务器资源概览信息
         return render(self, 'manager.html',{
             'cpu': self._serMeg['cpu'],
@@ -60,6 +62,7 @@ class Manager:
             'countAll': self._count_nums.count,
             'countToday': self._today.count,
             'crawlerCountToday': self._today.crawlerCount,
+            'photos':self._photos,
         })
 
 class Server:
@@ -289,8 +292,8 @@ class Photos:
     def addPhotos(self):
         '''添加摄影图片'''
         if self.method == 'GET':
-            a = photos.objects.order_by('-time')
-            return render_to_response('addPhotos.html',locals())
+            # return render_to_response('404.html');
+            return render_to_response('addPhotos.html');
         elif self.method == 'POST':
             userOauth(self)
 
@@ -350,6 +353,54 @@ class Photos:
                 num += 1
 
             return HttpResponse('year!')
+        else:
+            return render_to_response('404.html')
+
+    def delPhotos(self):
+        if self.method == 'POST':
+            photoId = self.POST.get('photoId')
+            if photoId is None:
+                return HttpResponse('01')
+            else:
+                data = photos.objects.get(id__exact=photoId)
+                imgSPath = data.imgS
+                imgMPath = data.imgM
+                imgBPath = data.imgB
+
+                # 从数据库中删除
+                # data.delete()
+                # # 本地文件删除
+                # os.remove(imgSPath.replace('/','',1))
+                # os.remove(imgMPath.replace('/','',1))
+                # os.remove(imgBPath.replace('/','',1))
+
+                return HttpResponse('1')
+        else:
+            return render_to_response('404.html')
+
+    def desPhotos(self):
+        if self.method == 'POST':
+            photoId = self.POST.get('photoId')
+            photoDes = self.POST.get('des')
+            if (photoId is None) or (photoDes is None):
+                return HttpResponse('01')
+            else:
+                dataDoc = photos.objects.get(id=photoId)
+                dataDoc.describe = photoDes
+                dataDoc.save()
+                return HttpResponse('1')
+        else:
+            return render_to_response('404.html')
+
+    def desPhotosSearch(self):
+        if self.method == 'POST':
+            photoId = self.POST.get('desId')
+            if photoId is None:
+                return HttpResponse('')
+            else:
+                dataDoc = photos.objects.get(id=photoId)
+                des = dataDoc.describe
+                return HttpResponse(des)
         else:
             return render_to_response('404.html')
 

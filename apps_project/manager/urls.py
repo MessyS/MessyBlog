@@ -20,6 +20,9 @@ urlpatterns = [
 
     # 摄影图片管理
     path('addPhotos/',views.Photos.addPhotos, name='addPhotos'),
+    path('delPhotos/',views.Photos.delPhotos, name='delPhotos'),
+    path('desPhotos/',views.Photos.desPhotos, name='desPhotos'),
+    path('desPhotosSearch/',views.Photos.desPhotosSearch, name='desPhotosSearch'),
 
     # 鸣谢列表
     path('listShowJson/',views.GoodBoy.listShowJson, name='GoodBoyJson'),

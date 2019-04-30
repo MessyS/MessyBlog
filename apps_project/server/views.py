@@ -96,16 +96,19 @@ class crawler:
         else:
             ip = meg.META['REMOTE_ADDR']
 
-        userAgent = meg.environ.get("HTTP_USER_AGENT")  # 获取设备头信息
-        if len(userAgent) >= 10:
-            agentAllowList = ['Mozilla','Baidu']
-            crawler = True
-            for i in agentAllowList:
-                if userAgent.find(i) != -1:
-                    crawler = False
+        if ip != '127.0.0.1':
+            userAgent = meg.environ.get("HTTP_USER_AGENT")  # 获取设备头信息
+            if len(userAgent) >= 10:
+                agentAllowList = ['Mozilla','Baidu']
+                crawler = True
+                for i in agentAllowList:
+                    if userAgent.find(i) != -1:
+                        crawler = False
 
-            if crawler or self.checkIP(ip) == False:
-                return False
+                if crawler or self.checkIP(ip) == False:
+                    return False
+                else:
+                    return True
             else:
                 return True
         else:

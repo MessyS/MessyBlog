@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-            <link rel="canonical" href="https://www.messys.top"/>
+        <link rel="canonical" href="https://www.messys.top"/>
         <meta name="apple-mobile-web-app-status-bar-style" content="black">
         <meta name="renderer" content="webkit">
         <meta charset="UTF-8" http-equiv="content-Type" content="text/html">
@@ -165,5 +165,22 @@
 			var bgiUrl = '{{ bgiAllUrl|safe }}';
 		}
 		$('.g-headers-slideShow-1').css('background','url(' + bgiUrl + ')')
+
+console.log(
+`
+%c
+______  ___
+___   |/  /_______________________  __
+__  /|_/ /_  _ \\_  ___/_  ___/_  / / /
+_  /  / / /  __/(__  )_(__  )_  /_/ /
+/_/  /_/  \\___//____/ /____/ _\\__, /
+                             /____/
+
+欢迎来到Messy的小站!
+
+商务联系邮箱:messygao@qq.com
+请在邮件中注明来自console
+`, "color:#03a9f4;");
 	</script>
+    <script src="{% static 'messy/framework/seoPush.js' %}" type="text/javascript" charset="utf-8"></script>
 </html>

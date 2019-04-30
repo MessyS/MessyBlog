@@ -1,0 +1,46 @@
+.g-body-photosList-block{
+	box-shadow: 0 2px 5px 2px rgba(0,0,0,.3);
+	display:inline-block;
+	margin:15px;
+	height:300px;
+	width:300px;
+
+	overflow: hidden;
+
+	.g-body-photosList-block-fun{
+		position: relative;
+		right: 5px;
+		margin:0 10px;
+
+		opacity: 0;
+		transform: translateX(-60px);
+
+		transition: all .3s;
+
+		div{
+			display: inline-block;
+			padding:5px 10px;
+			margin: 10px 5px;
+			background: #505cfd;
+			color: white;
+			border-radius: 2rem;
+			-webkit-transition: all .3s;
+			-o-transition: all .3s;
+			-moz-transition: all .3s;
+			transition: all .3s;
+
+			img{
+				height: 20px;
+			}
+		}
+		.g-body-photosList-block-fun-del{
+			background: red;
+		}
+	}	
+}
+.g-body-photosList-block:hover{
+	.g-body-photosList-block-fun{
+		opacity: 1;
+		transform: translateX(0);
+	}
+}

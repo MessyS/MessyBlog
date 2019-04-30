@@ -2,6 +2,17 @@
 <!DOCTYPE html>
 <html>
 	<head>
+        <link rel="canonical" href="https://www.messys.top/manager"/>
+        <meta name="apple-mobile-web-app-status-bar-style" content="black">
+        <meta name="renderer" content="webkit">
+        <meta charset="UTF-8" http-equiv="content-Type" content="text/html">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name='keywords' content="Messy,MessyBlog,博客,凌乱">
+        <meta name='description' content="Messy,MessyBlog,Messy的个人网站,博客,凌乱">
+        <meta name='robots' content="all">
+        <meta name='author' content="Messy,凌乱,messygao@qq.com">
+        <link rel="shortcut icon" href="{% static 'messy/img/Messy-logo/icon-logo.png' %}" type="image/x-icon"/>
+
 		<meta charset="UTF-8">
 		<meta http-equiv="X-UA-Compatible" content="ie=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -73,8 +84,8 @@
 								<img class='g-framework-left-options-list-open' src="{% static 'manager/img/main/open.png' %}" alt="打开">
 							</div>
 							<div class="g-framework-left-options-options-block">
-								<div class="g-framework-left-options-list g-framework-left-options-options j-fun" id='j-photos-1'>上传图片</div>
-								<div class="g-framework-left-options-list g-framework-left-options-options j-fun" id='j-photos-2'>图片列表</div>
+                                <router-link to='/photosAdd' class="g-framework-left-options-list g-framework-left-options-options j-fun" id='j-photos-1'>上传图片</router-link>
+								<router-link to='/photosList' class="g-framework-left-options-list g-framework-left-options-options j-fun" id='j-photos-2'>图片列表</router-link>
 							</div>
 						</div>
 						<div class="g-framework-left-options-all">
@@ -186,9 +197,6 @@
 								</div>
 							</div>
 						</div>
-					</div>
-					<div class="g-body-IP-right">
-						<div id="map" class='g-map'></div>
 					</div>
 				</div>
 			</div>
@@ -331,6 +339,39 @@
 			</div>
 		</template>
 
+        <template id="photosAdd">
+			<div class="g-body-photosAdd">
+				<h2>上传摄影图片</h2>
+
+				<h3>
+					<span>上传图片:</span>
+					<input type="file" name='imgF-photos' id='s-imgF-photos' multiple="multiple" accept="image/*">
+					<button>上传</button>
+				</h3>
+                <div class="g-body-photosAdd-meg"></div>
+				<div class="img-cont"></div>
+			</div>
+		</template>
+
+        <template id="photosList">
+			<div class="g-body-photosList">
+				<h2>摄影图片管理</h2>
+
+                {% for i in photos %}
+                    <div class="g-body-photosList-block" style="background:url({{ i.imgS }});background-position:center;background-size:cover;">
+                        <div class="g-body-photosList-block-fun">
+                            <div class="g-body-photosList-block-fun-des" photoId="{{ i.id }}">
+                                <img src="{% static 'manager/img/photosList/des.png' %}" alt="修改" class="g-body-photosList-block-fun-des-img">
+                            </div>
+                            <div class="g-body-photosList-block-fun-del" photoId="{{ i.id }}">
+                                <img src="{% static 'manager/img/photosList/del.png' %}" alt="删除" class="g-body-photosList-block-fun-del-img">
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+			</div>
+		</template>
+
 		<!-- main -->
 		<script src="https://pv.sohu.com/cityjson?ie=utf-8"></script>
 		<script src="{% static 'messy/framework/vue.min.js' %}" type="text/javascript" charset="utf-8"></script>
@@ -339,24 +380,24 @@
         <script src="{% static 'messy/framework/jquery.cookie.js' %}" type="text/javascript" charset="utf-8"></script>
 		<script src="{% static 'manager/js/main/manager.js' %}" type="text/javascript" charset="utf-8"></script>
 
-		<!-- serverOverView -->
+        <!-- articlesImportMD(App和Html) -->
+		<link rel="stylesheet" href="{% static 'manager/css/articlesImportMD/articlesImportMD.min.css' %}">
+		<script src="{% static 'manager/js/articlesImportMDApp/articlesImportMD.min.js' %}"></script>
+		<script src="{% static 'manager/js/articlesImportMDHtml/articlesImportMD.min.js' %}"></script>
+
+        <!-- serverOverView -->
 		<link rel="stylesheet" href="{% static 'manager/css/serverOverView/serverOverView.min.css' %}">
-		<link rel="stylesheet" href="{% static 'messy/model/maps/maps.min.css' %}"  media="screen">
-		<script type="text/javascript" src="{% static 'messy/model/maps/maps.min.js' %}" ></script>
-		<script type="text/javascript" src="{% static 'messy/model/maps/China.min.js' %}" ></script>
-		<script src="{% static 'manager/js/serverOverView/serverOverView.min.js' %}" ></script>
 
 		<!-- serverOperation -->
 		<link rel="stylesheet" href="{% static 'manager/css/serverOperation/serverOperation.min.css' %}">
 		<script src="{% static 'manager/js/serverOperation/serverOperation.min.js' %}"></script>
 
-		<!-- articlesImportMD(App和Html) -->
-		<link rel="stylesheet" href="{% static 'manager/css/articlesImportMD/articlesImportMD.min.css' %}">
-		<script src="{% static 'manager/js/articlesImportMDApp/articlesImportMD.min.js' %}"></script>
-		<script src="{% static 'manager/js/articlesImportMDHtml/articlesImportMD.min.js' %}"></script>
+		<!-- photosAdd -->
+		<link rel="stylesheet" href="{% static 'manager/css/photosAdd/photosAdd.min.css' %}">
+		<script src="{% static 'manager/js/photosAdd/photosAdd.js' %}"></script>
 
-		<!-- goodBoyList -->
-		<link rel="stylesheet" href="{% static 'manager/css/goodBoyList/goodBoyList.min.css' %}">
-		<script src="{% static 'manager/js/goodBoyList/goodBoyList.min.js' %}"></script>
+        <!-- photosList -->
+		<link rel="stylesheet" href="{% static 'manager/css/photosList/photosList.min.css' %}">
+		<script src="{% static 'manager/js/photosList/photosList.js' %}"></script>
 	</body>
 </html>
