@@ -96,15 +96,15 @@
 				template:'#photosList',
 			}
 		},
-	];
+	]
 	const router = new VueRouter({
 		routes: routes
-	});
+	})
 	
 	const app = new Vue({
 		el:'.g-all',
 		router:router,
-	});
+	})
 
 	// ****************************   初始加载  *************************
 

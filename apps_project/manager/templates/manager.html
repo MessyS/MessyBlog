@@ -346,7 +346,7 @@
 				<h3>
 					<span>上传图片:</span>
 					<input type="file" name='imgF-photos' id='s-imgF-photos' multiple="multiple" accept="image/*">
-					<button>上传</button>
+					<button id="j-add-photos">上传</button>
 				</h3>
                 <div class="g-body-photosAdd-meg"></div>
 				<div class="img-cont"></div>
@@ -380,17 +380,17 @@
         <script src="{% static 'messy/framework/jquery.cookie.js' %}" type="text/javascript" charset="utf-8"></script>
 		<script src="{% static 'manager/js/main/manager.js' %}" type="text/javascript" charset="utf-8"></script>
 
+        <!-- serverOverView -->
+		<link rel="stylesheet" href="{% static 'manager/css/serverOverView/serverOverView.min.css' %}">
+
+        <!-- serverOperation -->
+		<link rel="stylesheet" href="{% static 'manager/css/serverOperation/serverOperation.min.css' %}">
+		<script src="{% static 'manager/js/serverOperation/serverOperation.min.js' %}"></script>
+
         <!-- articlesImportMD(App和Html) -->
 		<link rel="stylesheet" href="{% static 'manager/css/articlesImportMD/articlesImportMD.min.css' %}">
 		<script src="{% static 'manager/js/articlesImportMDApp/articlesImportMD.min.js' %}"></script>
 		<script src="{% static 'manager/js/articlesImportMDHtml/articlesImportMD.min.js' %}"></script>
-
-        <!-- serverOverView -->
-		<link rel="stylesheet" href="{% static 'manager/css/serverOverView/serverOverView.min.css' %}">
-
-		<!-- serverOperation -->
-		<link rel="stylesheet" href="{% static 'manager/css/serverOperation/serverOperation.min.css' %}">
-		<script src="{% static 'manager/js/serverOperation/serverOperation.min.js' %}"></script>
 
 		<!-- photosAdd -->
 		<link rel="stylesheet" href="{% static 'manager/css/photosAdd/photosAdd.min.css' %}">
