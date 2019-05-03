@@ -30,7 +30,7 @@ class Messy():
         month = self.GET.get('month')
 
         # 默认配置
-        listAll = Article.objects.order_by('-time')     # 文章数查询
+        listAll = Article.objects.order_by('-time')  # 文章数查询
 
         if (category == None) and (pageId is None) and (year is None) and (month is None):
             pass
@@ -64,7 +64,6 @@ class Messy():
                 start_date = datetime.date(int(year),int(month), 1)
                 end_date = datetime.date(int(year), int(month), 30)
                 listAll = Article.objects.filter(time__range=(start_date, end_date))
-                print(listAll)
             # 单个条件存在
             else:
                 if not (category is None):
@@ -76,7 +75,7 @@ class Messy():
                     start_date = datetime.date(int(nowYear), int(month), 1)
                     end_date = datetime.date(int(nowYear), int(month), 30)
                     listAll = Article.objects.filter(time__range=(start_date, end_date))
-
+        
         ''' **************************************    以下为分页配置    ******************************************* '''
         paginator = Paginator(listAll, 10)  # 分页器配置
         if not (pageId is None):
@@ -85,37 +84,14 @@ class Messy():
             articlesList = paginator.page(1)
 
         ''' **************************************    以下为数据返回    ****************************************** '''
-        # 文章总数
-        recommendedList = Article.objects.all()
         # 随机推荐
-        randomList = []
-        for i in range(6):
-            while True:
-                randomNum = round(random.random() * len(recommendedList))
-                randomArticle = Article.objects.filter(id__exact=randomNum)
-                if randomArticle.exists():
-                    randomList.append({
-                        'id':randomNum,
-                        'title':randomArticle[0].name
-                    })
-                    break
-
+        randomList = Article.objects.order_by('?')[:6]
         # 智能推荐（算法优化中，暂时用随机推荐代替）
-        likeList = []
-        for i in range(6):
-            while True:
-                randomNum = round(random.random() * len(recommendedList))
-                randomArticle = Article.objects.filter(id__exact=randomNum)
-                if randomArticle.exists():
-                    likeList.append({
-                        'id': randomNum,
-                        'title': randomArticle[0].name
-                    })
-                    break
-
+        likeList = Article.objects.order_by('?')[:6]
+        
         # 所有分类(排除第一个:New)
         categoryList = Category.objects.exclude(id__exact=1)
-
+        
         # 历史归档
         archive = Article.objects.dates('time', 'month', order='DESC')
 
@@ -201,6 +177,7 @@ class MessyFun:
         return HttpResponse('year!')
 
     def siteSearchHot(self):
+        '''热词数据回显'''
         searchDataHotList = []
         list = searchHistory.objects.order_by('-count')[:15]
         for i in list:
@@ -208,10 +185,10 @@ class MessyFun:
         return JsonResponse(searchDataHotList,safe=False)
 
     def siteSearch(self):
+        '''关键词搜索'''
         Access().UserInfo(self)
         if self.method == 'POST':
             keyword = str(self.POST.get('keyword'))
-            print(keyword)
 
             # 搜索关键词数据库增加
             keywordSearched = searchHistory.objects.filter(keyword__iexact=keyword)

@@ -117,7 +117,7 @@
 					<h3 class="g-body-slideBar-randomArticles-title">随机推荐</h3>
 					<div class="g-body-slideBar-randomArticles-list">
                         {% for i in randomList %}
-                            <a href="/detail/{{ i.id }}" target="_blank">{{ i.title }}</a>
+                            <a href="/detail/{{ i.id }}" target="_blank">{{ i.name }}</a>
                         {% endfor %}
 					</div>
 				</div>
@@ -125,7 +125,7 @@
 					<h3 class="g-body-slideBar-smartArticles-title">猜你喜欢 <p style="font-size:13px;color:#AAA">(算法优化中...暂时使用随机文章代替-_-!!)</p></h3>
 					<div class="g-body-slideBar-smartArticles-list">
                         {% for i in likeList %}
-                            <a href="/detail/{{ i.id }}" target="_blank">{{ i.title }}</a>
+                            <a href="/detail/{{ i.id }}" target="_blank">{{ i.name }}</a>
                         {% endfor %}
 					</div>
 				</div>
