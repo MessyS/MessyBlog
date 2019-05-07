@@ -3,9 +3,11 @@ from . import views
 
 urlpatterns = [
     path('',views.Messy.index, name='index'),
+    path('randomPhotos/',views.Messy.randomPhotos, name='randomPhotos'),
 
     # 摄影图展示
     path('photos/',views.Messy.photos, name='photos'),
+    path('photosAjax/',views.Messy.photosAjax, name='photosAjax'),
     # 关于我展示
     path('about/',views.Messy.about,name='about'),
     # 赞赏页展示

@@ -23,6 +23,7 @@ class ArticleShow:
 
         # 访问记录与文章访问量
         Access().UserInfo(self)
+
         self._detail = Article.objects.filter(id__exact=articles_id)
         if self._detail.exists():
             detail = self._detail[0]
@@ -30,33 +31,11 @@ class ArticleShow:
             detail.save()
 
         ''' ****************************************** 侧边栏功能返回 *********************************************  '''
-        # 文章总数
-        recommendedList = Article.objects.all()
         # 随机推荐
-        randomList = []
-        for i in range(6):
-            while True:
-                randomNum = round(random.random() * len(recommendedList))
-                randomArticle = Article.objects.filter(id__exact=randomNum)
-                if randomArticle.exists():
-                    randomList.append({
-                        'id':randomNum,
-                        'title':randomArticle[0].name
-                    })
-                    break
+        randomList = Article.objects.order_by('?')[:6]
 
         # 智能推荐（算法优化中，暂时用随机推荐代替）
-        likeList = []
-        for i in range(6):
-            while True:
-                randomNum = round(random.random() * len(recommendedList))
-                randomArticle = Article.objects.filter(id__exact=randomNum)
-                if randomArticle.exists():
-                    likeList.append({
-                        'id': randomNum,
-                        'title': randomArticle[0].name
-                    })
-                    break
+        likeList = Article.objects.order_by('?')[:6]
 
         # 所有分类(排除第一个:New)
         categoryList = Category.objects.exclude(id__exact=1)

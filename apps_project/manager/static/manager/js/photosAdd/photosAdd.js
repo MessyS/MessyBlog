@@ -1,7 +1,7 @@
 (function () {
 	'use strtic';
 
-	$('#s-imgF-photos').change(function () {
+	$('#s-imgF-photos').on('change',function () {
 		// 每次重选之前清空已展示图片
 		$('.img-cont').empty();
 
@@ -54,29 +54,33 @@
 		});
 
 	$('#j-add-photos').on('click',function(){
-		$(".g-body-photosAdd-meg").html('<div style="color:#f0ad4e">数据发送中...</div>')
+		if($(".img-cont").children().length == 0){
+			alert('请选择图片')
+		}else {
+			$(".g-body-photosAdd-meg").html('<div style="color:#f0ad4e">数据发送中...</div>')
 
-		let formData = new FormData;
-		let photoFiles = document.getElementById("s-imgF-photos").files;
-		for(var i=0;i<photoFiles.length;i++){
-		formData.append('imgF',photoFiles[i]);
-		}
-
-		$.ajax({
-			url: '/addPhotos/',
-			type: 'POST',
-			contentType:false,
-			processData:false,
-			headers:{
-				"X-CSRFToken":$.cookie('csrftoken')
-			},
-			data:formData,
-			success: function () {
-				$('.g-body-photosAdd-meg').html(`<div style="color:#19b955">图片发布成功!</div>`)
-			},
-			error:function(){
-				$('.g-body-photosAdd-meg').html(`<div style="color:#c9302c">服务器数据处理失败，详情查看服务器日志!</div>`)
+			let formData = new FormData;
+			let photoFiles = document.getElementById("s-imgF-photos").files;
+			for (var i = 0; i < photoFiles.length; i++) {
+				formData.append('imgF', photoFiles[i]);
 			}
-		});
+
+			$.ajax({
+				url: '/addPhotos/',
+				type: 'POST',
+				contentType: false,
+				processData: false,
+				headers: {
+					"X-CSRFToken": $.cookie('csrftoken')
+				},
+				data: formData,
+				success: function () {
+					$('.g-body-photosAdd-meg').html(`<div style="color:#19b955">图片发布成功!</div>`)
+				},
+				error: function () {
+					$('.g-body-photosAdd-meg').html(`<div style="color:#c9302c">服务器数据处理失败，详情查看服务器日志!</div>`)
+				}
+			});
+		}
 	});
 }())

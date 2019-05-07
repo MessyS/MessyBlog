@@ -18,23 +18,11 @@
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>摄影 | Messy的小博客~~~</title>
 	<link rel="stylesheet" href="{% static 'messy/model/topmodel/topmodel.min.css' %}">
-    <link rel="stylesheet" href="{% static 'messy/framework/custom/loading.min.css' %}">
 	<link rel="stylesheet" href="{% static 'messy/framework/custom/webStyle.min.css' %}">
 	<link rel="stylesheet" href="{% static 'messy/css/photos.min.css' %}?rev=2">
 </head>
 <body>
     {% include 'top_model.html'%}
-
-    <div class="g-mask-all">
-        <div class="g-mask-text">
-            <div class="g-mask-M">M</div>
-            <div class="g-mask-E">E</div>
-            <div class="g-mask-S">S</div>
-            <div class="g-mask-S_2">S</div>
-            <div class="g-mask-Y">Y</div>
-        </div>
-        <div class="g-mask-bgi-2"></div>
-    </div>
 
 	<div class="g-bgi-bottom"></div>
 
@@ -47,8 +35,8 @@
 					<h4>(商用联系个人获取原图哟~~~)</h4>
 				</div>
 			</div>
-			<div class="g-body-photos">
-			</div>
+			<div class="g-body-photos"></div>
+            <div class="g-body-photos-meg">loading...</div>
 		</div>
 	</div>
 
@@ -59,13 +47,5 @@
 
 	<script src="{% static 'messy/js/photos.min.js' %}?rev=1"></script>
     <script src="{% static 'messy/framework/seoPush.js' %}?rev=2" type="text/javascript" charset="utf-8"></script>
-    <script>
-        setTimeout(function(){
-            $('.g-mask-bgi-2').addClass('g-mask-bgi-2-hover');
-            setTimeout(function(){
-                $('.g-mask-all').addClass('g-mask-all-remove')
-            },500)
-        },1000)
-    </script>
 </body>
 </html>

@@ -1,8 +1,8 @@
 # 系统库
 import requests
 import hashlib
-import time,random
-import os,re, shutil, json ,psutil,datetime,threading
+import time, random
+import os, re, shutil, json, psutil, datetime, threading
 from bs4 import BeautifulSoup
 from itertools import chain
 # django库
@@ -20,8 +20,10 @@ from apps_project.articles.models import *
 from apps_project.manager.models import *
 from .models import *
 
+
 class Messy():
     '''一些杂项的展示页面与独立小功能'''
+
     @ensure_csrf_cookie
     def index(self):
         category = self.GET.get('category')
@@ -43,31 +45,32 @@ class Messy():
             if (not (category is None)) and (not (year is None)) and (not (month is None)):
                 start_date = datetime.date(int(year), int(month), 1)
                 end_date = datetime.date(int(year), int(month), 30)
-                listAll = Article.objects.order_by('-time')\
-                    .filter(Q(category1__name__icontains=category) | Q(category2__name__icontains=category))\
+                listAll = Article.objects.order_by('-time') \
+                    .filter(Q(category1__name__icontains=category) | Q(category2__name__icontains=category)) \
                     .filter(time__range=(start_date, end_date))
             # 分类、年份存在
             elif (not (category is None)) and (not (year is None)):
-                listAll = Article.objects.order_by('-time')\
-                    .filter(Q(category1__name__icontains=category) | Q(category2__name__icontains=category))\
+                listAll = Article.objects.order_by('-time') \
+                    .filter(Q(category1__name__icontains=category) | Q(category2__name__icontains=category)) \
                     .filter(time__year=year)
             # 分类、月份存在
             elif (not (category is None)) and (not (month is None)):
                 nowYear = time.strftime('%Y', time.localtime(time.time()))
                 start_date = datetime.date(int(nowYear), int(month), 1)
                 end_date = datetime.date(int(nowYear), int(month), 30)
-                listAll = Article.objects.order_by('-time')\
-                    .filter(Q(category1__name__icontains=category) | Q(category2__name__icontains=category))\
+                listAll = Article.objects.order_by('-time') \
+                    .filter(Q(category1__name__icontains=category) | Q(category2__name__icontains=category)) \
                     .filter(time__range=(start_date, end_date))
             # 年份、月份存在
             elif (not (year is None)) and (not (month is None)):
-                start_date = datetime.date(int(year),int(month), 1)
+                start_date = datetime.date(int(year), int(month), 1)
                 end_date = datetime.date(int(year), int(month), 30)
                 listAll = Article.objects.filter(time__range=(start_date, end_date))
             # 单个条件存在
             else:
                 if not (category is None):
-                    listAll = Article.objects.order_by('-time').filter(Q(category1__name__icontains=category) | Q(category2__name__icontains=category))
+                    listAll = Article.objects.order_by('-time').filter(
+                        Q(category1__name__icontains=category) | Q(category2__name__icontains=category))
                 if not (year is None):
                     listAll = Article.objects.filter(time__year=year)
                 if not (month is None):
@@ -75,7 +78,7 @@ class Messy():
                     start_date = datetime.date(int(nowYear), int(month), 1)
                     end_date = datetime.date(int(nowYear), int(month), 30)
                     listAll = Article.objects.filter(time__range=(start_date, end_date))
-        
+                    
         ''' **************************************    以下为分页配置    ******************************************* '''
         paginator = Paginator(listAll, 10)  # 分页器配置
         if not (pageId is None):
@@ -84,14 +87,15 @@ class Messy():
             articlesList = paginator.page(1)
 
         ''' **************************************    以下为数据返回    ****************************************** '''
+        
         # 随机推荐
         randomList = Article.objects.order_by('?')[:6]
         # 智能推荐（算法优化中，暂时用随机推荐代替）
         likeList = Article.objects.order_by('?')[:6]
-        
+
         # 所有分类(排除第一个:New)
         categoryList = Category.objects.exclude(id__exact=1)
-        
+
         # 历史归档
         archive = Article.objects.dates('time', 'month', order='DESC')
 
@@ -103,26 +107,73 @@ class Messy():
 
         data = {
             # 文章分页器分页数据
-            'articlesList':articlesList,
+            'articlesList': articlesList,
             # 必应每日一图
             'bgiAllUrl': bgiAllUrl,
 
             # 侧边栏功能
-            'randomList':randomList,
-            'likeList':likeList,
-            'categoryList':categoryList,
-            'archive':archive,
+            'randomList': randomList,
+            'likeList': likeList,
+            'categoryList': categoryList,
+            'archive': archive,
 
             # 分页器
-            'pagesList':paginator.page_range,
+            'pagesList': paginator.page_range,
         }
 
         return render_to_response('index.html', data)
+
+    def randomPhotos(self):
+        data = photos.objects.order_by('?')[:4]
+        list = []
+        for i in data:
+            list.append(i.imgM)
+        return JsonResponse(list,safe=False)
 
     @ensure_csrf_cookie
     def photos(self):
         Access().UserInfo(self)
         return render_to_response('photos.html')
+
+    def photosAjax(self):
+        if self.method == 'POST':
+            nums = self.POST.get('n')
+            month = self.POST.get('m')
+
+            if (nums is None) and (month is None):
+                data = photos.objects.order_by('-time')[:30]
+            elif not(nums is None) and not(month is None):
+                nowYear = time.strftime('%Y', time.localtime(time.time()))
+                start_date = datetime.date(int(nowYear), int(month), 1)
+                end_date = datetime.date(int(nowYear), int(month), 30)
+                data = photos.objects.filter(time__range=(start_date, end_date))[:int(nums)]
+            elif not(nums is None):
+                data = photos.objects.order_by('-time')[:int(nums)]
+            elif not(time is None):
+                nowYear = time.strftime('%Y', time.localtime(time.time()))
+                start_date = datetime.date(int(nowYear), int(month), 1)
+                end_date = datetime.date(int(nowYear), int(month), 30)
+                data = Article.objects.filter(time__range=(start_date, end_date))
+
+            listData = []
+            for i in data:
+                listData.append({
+                    'id':i.id,
+                    'author': i.author.name,
+                    'time': i.time,
+                    'describe': i.describe,
+                    'imgS':i.imgS,
+                    'imgB':i.imgB,
+                })
+
+            listDataAll = {
+                'listAllNums':len(photos.objects.all()),
+                'listData':listData,
+            }
+
+            return JsonResponse(listDataAll)
+        else:
+            return render_to_response('404.html')
 
     def rockcloud(self):
         Access().UserInfo(self)
@@ -150,8 +201,8 @@ class Messy():
 
         # 剩下的数据数据排列
         listRandom = []
-        list = goodBoyList.objects.exclude(id=rankingThreeNum[0])\
-            .exclude(id=rankingThreeNum[1])\
+        list = goodBoyList.objects.exclude(id=rankingThreeNum[0]) \
+            .exclude(id=rankingThreeNum[1]) \
             .exclude(id=rankingThreeNum[2])
         for i in list:
             listRandom.append(i)
@@ -160,10 +211,10 @@ class Messy():
         # 总个数
         totalNum = len(rankingList)
 
-        return render_to_response('goodBoy.html',{
-            'ranking':rankingThree,     # 前三数据
-            'totalNum':totalNum,        # 总个数
-            'list': listRandom,         # 随机排列名单
+        return render_to_response('goodBoy.html', {
+            'ranking': rankingThree,  # 前三数据
+            'totalNum': totalNum,  # 总个数
+            'list': listRandom,  # 随机排列名单
         })
 
     # 个人详情页
@@ -174,7 +225,21 @@ class Messy():
 
 class MessyFun:
     def test(self):
-        return HttpResponse('year!')
+        # data = Article.objects.all()
+        #
+        # for i in data:
+        #     top = i.name
+        #     text = BeautifulSoup(i.context).get_text()
+        #     top_index = text.find(top)
+        #     top_index = int(top_index) + len(top)
+        #     del_top = text[:top_index]
+        #     result = text.replace(del_top, '')
+        #     front_context = result[:500]
+        #     front_context = re.sub('\n', '<p></p>', front_context)
+        #     i.front_context = front_context
+        #     i.save()
+        #     print('【%s】处理完成' % i.name)
+        return render_to_response('test.html')
 
     def siteSearchHot(self):
         '''热词数据回显'''
@@ -182,7 +247,7 @@ class MessyFun:
         list = searchHistory.objects.order_by('-count')[:15]
         for i in list:
             searchDataHotList.append(i.keyword)
-        return JsonResponse(searchDataHotList,safe=False)
+        return JsonResponse(searchDataHotList, safe=False)
 
     def siteSearch(self):
         '''关键词搜索'''
@@ -196,7 +261,7 @@ class MessyFun:
                 searchCount = keywordSearched[0]
                 searchCount.count += 1
             else:
-                searchCount = searchHistory(keyword=keyword,count=1)
+                searchCount = searchHistory(keyword=keyword, count=1)
             searchCount.save()
 
             # 总数据存储数组
@@ -206,9 +271,9 @@ class MessyFun:
             searchDataOne = Article.objects.order_by('-time').filter(name__icontains=keyword)
             for i in searchDataOne:
                 json = {
-                    'id':i.id,
-                    'title':i.name,
-                    'filter':'title',
+                    'id': i.id,
+                    'title': i.name,
+                    'filter': 'title',
                 }
                 searchDataJson.append(json)
 
@@ -216,7 +281,7 @@ class MessyFun:
             searchDataTwo = Article.objects.order_by('-time').filter(front_context__icontains=keyword)
 
             # 数据去重
-            searchDataId = []               # 一级查询id存储
+            searchDataId = []  # 一级查询id存储
             for i in searchDataOne:
                 searchDataId.append(i.id)
             for i in searchDataTwo:
@@ -230,6 +295,6 @@ class MessyFun:
                     }
                     searchDataJson.append(json)
 
-            return JsonResponse(searchDataJson,safe=False)
+            return JsonResponse(searchDataJson, safe=False)
         else:
             return render_to_response('404.html')

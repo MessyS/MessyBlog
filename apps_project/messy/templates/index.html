@@ -19,7 +19,7 @@
 		<meta name='viewport' content='width=device-width,initial-scale=1.0'>
 	</head>
 	<body>
-        {% include 'top_model.html'%}
+		{% include 'top_model.html'%}
 
 		<div class="g-headers">
 			<div class="g-headers-text">
@@ -28,7 +28,7 @@
 			</div>
 			<div class="g-headers-slideShow">
 				<div class="g-headers-slideShow-block">
-					<div class="g-headers-slideShow-1"><p>Loading...</p></div>
+					<div class="g-headers-slideShow-1"></div>
 					<div class="g-headers-slideShow-2"><p>Loading...</p></div>
 					<div class="g-headers-slideShow-3"><p>Loading...</p></div>
 					<div class="g-headers-slideShow-4"><p>Loading...</p></div>
@@ -58,43 +58,43 @@
 		</div>
 
 		<div class="g-body">
-			<div class="g-body-branch-all">
+			<main>
                 {% for i in articlesList %}
-                    <div class="g-body-branch">
-                        <a href="/detail/{{ i.id }}" target="_blank">
-                            <div class="g-body-branch-photo">
-                                <div class="g-body-branch-photo-block">
-                                    {{ i.photo|safe }}
-                                </div>
-                                <div class="g-body-branch-text-footer-lable-block">
-                                    <div class="g-body-branch-text-footer-lable-block-1">{{ i.category1.name }}</div>
-                                    <div class="g-body-branch-text-footer-lable-block-2">{{ i.category2.name }}</div>
-                                </div>
-                            </div>
-                        </a>
-                        <div class="g-body-branch-text">
-                            <div class="g-body-branch-text-headers">
-                                <div class="g-body-branch-text-headers-title"><a href="/detail/{{ i.id }}" target="_blank"><h3>{{ i.name }}</h3></a></div>
-                            </div>
-                            <div class="g-body-branch-text-body">
-                                <p>{{ i.front_context|slice:'300' }}</p>
-                            </div>
-                            <div class="g-body-branch-text-footer">
-                                <div class="g-body-branch-text-footer-author">{{ i.author.name }}</div>
-                                <div class="g-body-branch-text-footer-point">•</div>
-                                <div class="g-body-branch-text-footer-time">{{ i.time|slice:'10' }}</div>
-
-                                <div class="g-body-branch-text-footer-fun-block">
-                                    <div class="g-body-branch-text-footer-reading-block">
-                                        <img class="g-body-branch-text-footer-reading" src= '{% static "messy/img/index/reading.png" %}'>{{ i.traffic }}
-                                    </div>
-                                    <div class="g-body-branch-text-footer-comments-block">
-                                        <img class="g-body-branch-text-footer-comments" src= '{% static "messy/img/index/comments.png" %}'>{{ i.comments }}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <article>
+                        <header>
+                            <header-bgi>
+                                <header-bgi-block>
+                                    <a href="/detail/{{ i.id }}" target="_blank">
+                                        {{ i.photo|safe }}
+                                    </a>
+                                </header-bgi-block>
+                            </header-bgi>
+                            <header-nav>
+                                <header-lable>{{ i.category1.name }}</header-lable>
+                            </header-nav>
+                        </header>
+                        <section>
+                            <a href="/detail/{{ i.id }}" target="_blank"><h1>{{ i.name }}</h1></a>
+                            <section-article>
+                                <p>{{ i.front_context|safe|slice:'500' }}</p>
+                            </section-article>
+                            <footer>
+                                <footer-left>
+                                    <span class="footer-left-author">Messy</span>
+                                    <span class="footer-left-point">•</span>
+                                    <span class="footer-left-time">2019年4月22日 18:38</span>
+                                </footer-left>
+                                <footer-right>
+                                    <span class="footer-right-read">
+                                        <img src='{% static "messy/img/index/reading.png" %}'>{{ i.traffic }}
+                                    </span>
+                                    <span class="footer-right-comments">
+                                        <img src='{% static "messy/img/index/comments.png" %}'>{{ i.comments }}
+                                    </span>
+                                </footer-right>
+                            </footer>
+                        </section>
+                    </article>
                 {% endfor %}
 
 				<div class="g-body-pages">
@@ -110,7 +110,7 @@
 						</tbody>
 					</table>
 				</div>
-			</div>
+			</main>
 
 			<div class="g-body-slideBar">
 				<div class="g-body-slideBar-randomArticles">
@@ -122,7 +122,7 @@
 					</div>
 				</div>
 				<div class="g-body-slideBar-smartArticles">
-					<h3 class="g-body-slideBar-smartArticles-title">猜你喜欢 <p style="font-size:13px;color:#AAA">(算法优化中...暂时使用随机文章代替-_-!!)</p></h3>
+					<h3 class="g-body-slideBar-smartArticles-title">猜你喜欢</h3>
 					<div class="g-body-slideBar-smartArticles-list">
                         {% for i in likeList %}
                             <a href="/detail/{{ i.id }}" target="_blank">{{ i.name }}</a>
@@ -135,7 +135,7 @@
                         {% for i in categoryList %}
                             <a href="/?category={{ i.name }}" style="display: inline-block"><span>{{ i.name }}</span></a>
                         {% endfor %}
-                    </div>
+					</div>
 				</div>
 				<div class="g-body-slideBar-archive">
 					<h3 class="g-body-slideBar-archive-title">历史归档</h3>
@@ -153,7 +153,7 @@
     <script src="{% static 'messy/framework/custom/md5.min.js' %}" type="text/javascript" charset="utf-8"></script>
     <script src="{% static 'messy/model/topmodel/topmodel.min.js' %}?rev=1" type="text/javascript" charset="utf-8"></script>
 
-    <script src="{% static 'messy/js/index.js' %}" type="text/javascript" charset="utf-8"></script>
+    <script src="{% static 'messy/js/index.min.js' %}" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
 		if($(window).width() < 740){
 			var apiUrl = 'https://cn.bing.com/ImageResolution.aspx?';
@@ -164,7 +164,7 @@
 		}else{
 			var bgiUrl = '{{ bgiAllUrl|safe }}';
 		}
-		$('.g-headers-slideShow-1').css('background','url(' + bgiUrl + ')')
+		$('.g-headers-slideShow-1').css('background','url(' + bgiUrl + ')');
 
 console.log(
 `

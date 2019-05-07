@@ -1,15 +1,33 @@
 {% load static %}
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>闭站保护中... | Messy的小博客~~~</title>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
 </head>
 <body>
-    <h1>抱歉！闭站保护中...</h1>
-    <p>由于数据库结构优化，所有文章需要重新导入，预计将于近日下午15点前重新开放</p>
-    <br>
-    <p>2019-04-18</p>
-    <p>Messy</p>
+    <script src="{% static 'messy/framework/jquery.min.js' %}" type="text/javascript" charset="utf-8"></script>
+    <script src="{% static 'messy/framework/jquery.cookie.js' %}" type="text/javascript" charset="utf-8"></script>
+{#    <script>#}
+{#        $.ajax({#}
+{#			url: '/photosAjax/',#}
+{#			type: 'POST',#}
+{#			headers:{#}
+{#				"X-CSRFToken":$.cookie('csrftoken')#}
+{#			},#}
+{#			data:{#}
+{#			    'n':10,#}
+{#            },#}
+{#			success: function (data) {#}
+{#				console.log(data);#}
+{#			},#}
+{#			error:function(data){#}
+{#			    console.log(data);#}
+{#			}#}
+{#		});#}
+{#    </script>#}
 </body>
 </html>

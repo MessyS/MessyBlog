@@ -230,6 +230,7 @@ class Articles:
             del_top = text[:top_index]
             result = text.replace(del_top, '')
             front_context = result[:500]
+            front_context = re.sub('\n', '<p></p>', front_context)
             addHF.front_context = front_context
 
             # 存进数据库

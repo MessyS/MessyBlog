@@ -19,7 +19,7 @@ from django.conf.urls.static import static
 from django.shortcuts import render_to_response
 
 def biZhan(req):
-    return render_to_response('test.html')
+    return render_to_response('CloseSite.html')
 
 urlpatterns = [
     # path('admin/', admin.site.urls),

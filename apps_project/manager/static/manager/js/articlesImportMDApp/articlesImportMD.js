@@ -22,7 +22,7 @@
 			});
 		});
 
-		$("#s-publishedArticles").on('click',function(){
+		$("#s-publishedArticles-2").on('click',function(){
 				$chkBoxes = $('.g-body-importMD').find('input:checked');
 				if ($chkBoxes.length == 0) {
 					alert('请至少选择一个分类');     // 如果不勾选弹出警告
