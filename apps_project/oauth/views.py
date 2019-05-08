@@ -29,11 +29,30 @@ class Login:
             userFind = MUL.objects.filter(
                 Q(messyId__exact=messyId) & Q(email__exact=messyEmail))
             if userFind.exists():
-                return HttpResponse('1')        # 认证成功
+                if userFind[0].is_messy == 1:
+                    jsonDate = {
+                        'status': '1',
+                        'yeah': '1',
+                    }
+                    return JsonResponse(jsonDate)        # 管理员认证成功
+                else:
+                    jsonDate = {
+                        'status': '1',
+                        'yeah': '0',
+                    }
+                    return JsonResponse(jsonDate)        # 普通用户认证成功
             else:
-                return HttpResponse('02')       # 不存在的用户
+                jsonDate = {
+                    'status': '02',
+                    'yeah': '0',
+                }
+                return HttpResponse(jsonDate)       # 不存在的用户
         else:
-            return HttpResponse('01')           # 未注册的session
+            jsonDate = {
+                'status':'01',
+                'yeah': '0',
+            },
+            return HttpResponse(jsonDate)           # 未注册的session
 
     # 登出（删除cookie）
     def logOut(self):

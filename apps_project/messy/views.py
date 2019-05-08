@@ -87,7 +87,8 @@ class Messy():
             articlesList = paginator.page(1)
 
         ''' **************************************    以下为数据返回    ****************************************** '''
-        
+        # 热门文章
+        hotList = Article.objects.order_by('-traffic')[:3]
         # 随机推荐
         randomList = Article.objects.order_by('?')[:6]
         # 智能推荐（算法优化中，暂时用随机推荐代替）
@@ -112,6 +113,7 @@ class Messy():
             'bgiAllUrl': bgiAllUrl,
 
             # 侧边栏功能
+            'hotList':hotList,
             'randomList': randomList,
             'likeList': likeList,
             'categoryList': categoryList,
@@ -127,7 +129,7 @@ class Messy():
         data = photos.objects.order_by('?')[:4]
         list = []
         for i in data:
-            list.append(i.imgM)
+            list.append(i.imgS)
         return JsonResponse(list,safe=False)
 
     @ensure_csrf_cookie
@@ -228,14 +230,8 @@ class MessyFun:
         # data = Article.objects.all()
         #
         # for i in data:
-        #     top = i.name
-        #     text = BeautifulSoup(i.context).get_text()
-        #     top_index = text.find(top)
-        #     top_index = int(top_index) + len(top)
-        #     del_top = text[:top_index]
-        #     result = text.replace(del_top, '')
-        #     front_context = result[:500]
-        #     front_context = re.sub('\n', '<p></p>', front_context)
+        #     front_context = re.sub('link','', i.front_context)
+        #     front_context = re.sub('script','',front_context)
         #     i.front_context = front_context
         #     i.save()
         #     print('【%s】处理完成' % i.name)

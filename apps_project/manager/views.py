@@ -231,6 +231,8 @@ class Articles:
             result = text.replace(del_top, '')
             front_context = result[:500]
             front_context = re.sub('\n', '<p></p>', front_context)
+            front_context = re.sub('link', '', front_context)
+            front_context = re.sub('script','',front_context)
             addHF.front_context = front_context
 
             # 存进数据库
@@ -311,7 +313,7 @@ class Photos:
                 photoName =  'Messy%s%s%s' % (model,nowTime,i)
                 photoName = hashlib.new('md5', photoName.encode('utf-8'))
                 photoName = photoName.hexdigest()
-                photoName = 'media/cameraPhotos/img%s/%s.jpg' % (model,photoName)
+                photoName = 'media/cameraPhotos/img%s/%s.webp' % (model,photoName)
                 modelList.append(photoName)
 
             for i in range(len(imgList)):
@@ -332,9 +334,9 @@ class Photos:
                     newHeight = round(newWidth / w * h)
                     img = img.resize((newWidth, newHeight), Image.ANTIALIAS)
                 if model == 'S':
-                    img.save(imgSNameList[num], optimize=True, quality=85)
+                    img.save(imgSNameList[num],'WEBP')
                 elif model == 'M':
-                    img.save(imgMNameList[num], optimize=True, quality=85)
+                    img.save(imgMNameList[num],'WEBP')
                 else:
                     pass
             num = 0
@@ -346,7 +348,7 @@ class Photos:
                 time.sleep(1)                   # 睡一秒存储,以防报错
 
                 # 在进行各种压缩
-                img = Image.open(imgBNameList[num])
+                img = Image.open(imgBNameList[num]).convert('RGB')
                 w, h = img.size                  # 原始图片的长宽
                 photoSave(img,w,h,600,'S')           # 存小图
                 photoSave(img,w,h,1500,'M')          # 存中图

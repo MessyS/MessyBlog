@@ -15,7 +15,7 @@
 
 		<title>首页 | Messy的小博客~~~</title>
 		<link rel="stylesheet" href='{% static "messy/framework/custom/webStyle.min.css" %}'>
-		<link rel="stylesheet" href='{% static "messy/css/index.min.css" %}'>
+		<link rel="stylesheet" href='{% static "messy/css/index.min.css" %}?rev=1'>
 		<meta name='viewport' content='width=device-width,initial-scale=1.0'>
 	</head>
 	<body>
@@ -114,6 +114,14 @@
 
 			<div class="g-body-slideBar">
 				<div class="g-body-slideBar-randomArticles">
+					<h3 class="g-body-slideBar-randomArticles-title">热门文章</h3>
+					<div class="g-body-slideBar-randomArticles-list">
+                        {% for i in hotList %}
+                            <a href="/detail/{{ i.id }}" target="_blank">{{ i.name }}</a>
+                        {% endfor %}
+					</div>
+				</div>
+                <div class="g-body-slideBar-randomArticles">
 					<h3 class="g-body-slideBar-randomArticles-title">随机推荐</h3>
 					<div class="g-body-slideBar-randomArticles-list">
                         {% for i in randomList %}
@@ -155,6 +163,11 @@
 
     <script src="{% static 'messy/js/index.min.js' %}" type="text/javascript" charset="utf-8"></script>
 	<script type="text/javascript">
+        $('.g-body-slideBar-archive-list').each(function () {
+            let time = $(this).find('li').html();
+            $(this).find('li').html(time.replace('1日',''));
+        });
+
 		if($(window).width() < 740){
 			var apiUrl = 'https://cn.bing.com/ImageResolution.aspx?';
 			var w = $(window).width();
